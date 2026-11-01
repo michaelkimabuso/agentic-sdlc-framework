@@ -3,7 +3,7 @@
 **Document status:** Approved architectural direction; implementation is in progress  
 **Milestone:** M1 — Guided Idea-to-PR  
 **Framework version:** Initial development; no release version assigned  
-**Last updated:** 2026-11-01
+**Last updated:** 2026-11-02
 
 > This document is the architectural and implementation reference for M1. It records the agreed design, intended behavior, boundaries, and completion criteria. It is not a runtime instruction file and does not replace the detailed workflow, skill instructions, or templates.
 
@@ -431,6 +431,17 @@ Initial default maximum: three rounds per review activity. This is a safety cap,
 
 Human approval remains separate from an agent's review outcome.
 
+### 8.4 Review execution strategy
+
+The framework owns the Code Review process, criteria, finding lifecycle, review-round limits, and approval thresholds. The coding-agent adapter selects the review execution mechanism.
+
+Use this preference order:
+1. **Native review capability:** Prefer a suitable native review feature provided by the coding agent (for example, Codex `/review` or a Claude Code review capability), when it can satisfy the framework's review requirements.
+2. **Dedicated reviewer agent:** If no suitable native capability is available, use a dedicated reviewer agent or subagent with read-only access where the platform supports it.
+3. **Framework-defined procedure:** If neither option is available, use the framework's structured review procedure. Prefer a fresh review context. If the platform cannot provide meaningful separation from the implementation context, disclose that limitation rather than claiming independent review.
+
+Native review features are execution mechanisms, not replacements for the framework's Code Review skill or its rules. Review findings must still be evaluated, validated where practical, normalized into the shared report format, and processed through the framework's bounded review lifecycle. A native or separate reviewer is not automatically correct; do not accept findings without assessment.
+
 ## 9. Adaptive Planning and escalation
 
 An approved plan is a baseline, not immutable. During implementation, technical decisions may be revised when actual project discoveries justify an adjustment, provided approved requirements, constraints, and scope are preserved.
@@ -467,7 +478,9 @@ The latest approved specification and the plan with documented, authorized adapt
 
 Codex is the first supported coding-agent adapter. Its exact skill-discovery and instruction requirements must be verified against the current Codex environment and documentation before the adapter is considered validated.
 
-Use Codex's native skill and repository-instruction mechanisms. Keep Codex-specific syntax and conventions in adapters/codex/ and avoid leaking them into the framework core.
+Use Codex's native skill, repository-instruction, and review mechanisms where suitable. In particular, prefer Codex's native code-review capability (such as `/review`) for review execution when it is available and compatible with the framework's review requirements. Keep Codex-specific commands, syntax, and conventions in adapters/codex/ and avoid leaking them into the framework core.
+
+The framework's Code Review skill remains responsible for the review process, inputs, criteria, finding format and lifecycle, review rounds, and outcome rules. The adapter selects the strongest suitable execution mechanism supported by the coding agent.
 
 ### 10.2 Installed skill layout
 
@@ -586,6 +599,18 @@ The root README introduces the framework to users and contributors. It should ex
 
 It should remain an entry point rather than duplicating the full blueprint or every skill instruction.
 
+### 11.2 License
+
+The repository is intended to be distributed under the **Apache License, Version 2.0**.
+
+- The root `LICENSE` file must contain the complete, unmodified Apache License 2.0 text.
+- The copyright notice for the original project work is `Copyright 2026 Michael Kim Abuso`.
+- The root README must identify Apache-2.0 as the project license and link to the root LICENSE file.
+- Preserve applicable third-party copyright and license notices. Do not include employer-owned, confidential, or otherwise unlicensed material in the repository.
+- Contributions from other people remain subject to the project's contribution terms and the applicable license.
+
+The license choice and copyright notice do not imply that third-party material or contributions are owned by the project maintainer.
+
 ### 11.2 Codex adapter README
 
 adapters/codex/README.md explains Codex-specific integration: native skill discovery, project instruction integration, adapter-specific compatibility requirements, installed files, installation/update behavior, limitations, and validation.
@@ -606,12 +631,12 @@ Example workspace:
 
     workspace/
     ├── agentic-sdlc-framework/
-    └── parents-business-app/
+    └── sample-app/
 
 Example command:
 
     cd agentic-sdlc-framework
-    python scripts/install.py --target ../parents-business-app --adapter codex
+    python scripts/install.py --target ../sample-app --adapter codex
 
 Installation is copy-based. The application receives a self-contained copy of required runtime resources and does not depend on the framework clone after installation.
 
@@ -663,7 +688,7 @@ If the managed AGENTS.md section has been locally modified, preserve it and repo
 
 Update the framework clone to the intended version, then run the installer in update mode:
 
-    python scripts/install.py --target ../parents-business-app --adapter codex --update
+    python scripts/install.py --target ../sample-app --adapter codex --update
 
 The installer uses the checked-out framework version. It must not silently fetch or install the latest version. Updates are intentional and controlled.
 
@@ -813,3 +838,4 @@ Implementation details that depend on current Codex behavior must be verified du
 | Date | Change |
 |---|---|
 | 2026-11-01 | Initial consolidated M1 architecture and implementation blueprint based on agreed design decisions. |
+| 2026-11-02 | Clarified native review execution strategy, specified Apache-2.0 licensing, and generalized sample application references. |
