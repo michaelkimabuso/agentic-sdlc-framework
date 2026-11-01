@@ -8,9 +8,12 @@ The first milestone is Idea to PR (M1), with guided execution and explicit human
 
 The framework separates the workflow definition, artifact templates, and coding-agent adapter so the process can evolve without tying the core to one tool.
 
+## Project attribution
+
+**Project creator and maintainer:** Michael Kim Abuso
+
+This project was developed with AI assistance. The project direction, requirements, architectural decisions, and final review are maintained by the project maintainer.
 
 ## License
 
-Copyright 2026 Michael Kim Abuso.
-
-This project is licensed under the [Apache License, Version 2.0](LICENSE) (Apache-2.0). See the [LICENSE](LICENSE) file for the complete license text.
+This project is distributed under the [Apache License, Version 2.0](LICENSE) (Apache-2.0). The license applies to material the project maintainer is authorized to license. Third-party material remains subject to its applicable rights and license terms.
