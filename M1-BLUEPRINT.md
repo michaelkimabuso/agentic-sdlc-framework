@@ -599,17 +599,18 @@ The root README introduces the framework to users and contributors. It should ex
 
 It should remain an entry point rather than duplicating the full blueprint or every skill instruction.
 
-### 11.2 License
+### 11.2 License and attribution
 
-The repository is intended to be distributed under the **Apache License, Version 2.0**.
+The repository is intended to be distributed under the **Apache License, Version 2.0**, subject to confirming that the project maintainer has the necessary rights to license the material included in the repository.
 
-- The root `LICENSE` file must contain the complete, unmodified Apache License 2.0 text.
-- The copyright notice for the original project work is `Copyright 2026 Michael Kim Abuso`.
-- The root README must identify Apache-2.0 as the project license and link to the root LICENSE file.
+- The root `LICENSE` file contains the complete Apache License 2.0 text without a project-specific blanket copyright notice.
+- The root README identifies Apache-2.0 as the intended project license and links to the root LICENSE file.
+- The README identifies the project creator and maintainer and transparently discloses AI assistance.
+- Do not make a blanket claim that every part of the repository is exclusively human-authored or copyrightable by the project maintainer.
 - Preserve applicable third-party copyright and license notices. Do not include employer-owned, confidential, or otherwise unlicensed material in the repository.
 - Contributions from other people remain subject to the project's contribution terms and the applicable license.
 
-The license choice and copyright notice do not imply that third-party material or contributions are owned by the project maintainer.
+Project attribution describes the maintainer's role; it is not a legal determination of copyright ownership over every element. Confirm licensing rights before distributing or relying on the license commercially.
 
 ### 11.2 Codex adapter README
 
