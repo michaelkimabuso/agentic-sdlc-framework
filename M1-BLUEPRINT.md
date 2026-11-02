@@ -189,15 +189,17 @@ Every generated artifact must contain enough context for another qualified human
 
 ### 5.1 Intent
 
-**Purpose:** Help an idea owner articulate the problem, context, affected users, and desired outcome before solution design begins.
+**Purpose:** Help an idea owner move from an initial idea—even a vague or incomplete business idea—to a clear articulation of the problem or opportunity, context, affected users, and desired outcomes before solution design begins.
 
-- Optional in the Idea-to-PR workflow.
-- Primarily business-oriented; avoid premature technical solutioning.
-- Use adaptive, focused questions rather than a fixed questionnaire.
-- Do not ask for information already provided.
-- Distinguish confirmed facts, assumptions, and unanswered questions.
-- Create or update intent.md.
-- A draft may be produced with incomplete information, but critical unresolved business decisions must be acknowledged by the owner before the intent is treated as confirmed.
+- Optional in the Idea-to-PR workflow when equivalent context already exists.
+- Accept both an early, loosely expressed idea and a more developed concept that needs refinement. Do not require a separate idea-formation exercise before invoking this skill.
+- When the starting point is vague, facilitate guided discovery through adaptive, focused questions. Explore the motivation, potential audience, current situation or problem, impact, desired outcomes, constraints, priorities, assumptions, and important unknowns as relevant.
+- Do not use a fixed questionnaire or ask for information already provided. Follow the most useful unanswered thread rather than mechanically covering every topic.
+- Remain primarily business- and problem-oriented; avoid premature technical solutioning or assuming that software is necessarily the right answer.
+- Distinguish owner-confirmed facts from assumptions, hypotheses, and unanswered questions.
+- Discovery conversations do not establish market demand or validate a business opportunity. Where evidence is needed, identify appropriate follow-up validation such as customer interviews, market or competitor research, prototype testing, or willingness-to-pay research.
+- It is acceptable for discovery to conclude that more research is needed, the opportunity is not yet clear, or a non-software solution may be more appropriate.
+- Create or update intent.md. A draft may capture incomplete information, but critical unresolved business decisions must be acknowledged by the owner before the intent is treated as confirmed.
 
 **Output:** intent.md.
 
@@ -347,7 +349,7 @@ At the beginning of a workflow, determine the artifact directory and pass its ex
 
 The default flow for a new idea or feature is:
 
-1. Intent — optional when equivalent context already exists.
+1. Intent — optional when equivalent context already exists; for a vague idea, use it to facilitate initial problem and opportunity discovery.
 2. Specification — define and self-validate expected behavior.
 3. Human resolution and approval of important requirements.
 4. Planning.
@@ -369,7 +371,8 @@ The workflow coordinates skills and gates. It should not duplicate their detaile
 Do not force the full workflow when equivalent information or artifacts already exist.
 
 Examples:
-- New idea without a ticket: Intent, Specification, Planning, and subsequent stages.
+- Vague or early-stage business/product idea: use Intent to clarify the problem or opportunity and desired outcomes, then proceed to Specification when there is enough direction to define expected behavior.
+- More developed idea without a ticket: use Intent to refine the context if needed, then Specification, Planning, and subsequent stages.
 - Existing complete ticket: start at Specification or Planning as appropriate.
 - Clear, small bug with reproduction: start at Planning or Implementation depending on complexity.
 - Another developer's PR: invoke Code Review independently.
@@ -822,6 +825,8 @@ Do not mark a criterion complete based only on planned behavior. Record evidence
 ## 16. Deferred decisions and future work
 
 The following remain outside M1 or require later evidence:
+- A dedicated product-discovery and business-validation capability beyond the initial guided discovery supported by the Intent skill.
+- Product-level decomposition into epics, capabilities, and a prioritized backlog of implementation tickets. M1 handles a focused idea or work item through PR; it does not require generating an entire product backlog upfront. A future capability may support progressive decomposition and refinement as priorities and evidence evolve.
 - Claude Code adapter and CLAUDE.md integration.
 - Additional coding-agent adapters.
 - Automated evaluation infrastructure for regression scenarios.
@@ -840,3 +845,4 @@ Implementation details that depend on current Codex behavior must be verified du
 |---|---|
 | 2026-11-01 | Initial consolidated M1 architecture and implementation blueprint based on agreed design decisions. |
 | 2026-11-02 | Clarified native review execution strategy, specified Apache-2.0 licensing, and generalized sample application references. |
+| 2026-11-02 | Expanded Intent to support guided discovery from vague ideas, distinguished discovery from market validation, and deferred product backlog decomposition beyond M1. |
