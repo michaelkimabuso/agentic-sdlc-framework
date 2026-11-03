@@ -16,4 +16,4 @@ This project was developed with AI assistance. The project direction, requiremen
 
 ## License
 
-This project is distributed under the [Apache License, Version 2.0](LICENSE) (Apache-2.0). The license applies to material the project maintainer is authorized to license. Third-party material remains subject to its applicable rights and license terms.
+This project is distributed under the [Apache License, Version 2.0](LICENSE) (Apache-2.0). The license applies to material the project maintainer is authorized to license. Third-party material remains subject to its applicable rights and license terms. See [PROVENANCE.md](PROVENANCE.md) for material external influences and identifiable third-party material incorporated into the project.
