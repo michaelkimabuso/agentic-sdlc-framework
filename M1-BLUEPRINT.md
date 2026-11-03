@@ -3,7 +3,7 @@
 **Document status:** Approved architectural direction; implementation is in progress  
 **Milestone:** M1 — Guided Idea-to-PR  
 **Framework version:** Initial development; no release version assigned  
-**Last updated:** 2026-11-03
+**Last updated:** 2026-11-04
 
 > This document is the architectural and implementation reference for M1. It records the agreed design, intended behavior, boundaries, and completion criteria. It is not a runtime instruction file and does not replace the detailed workflow, skill instructions, or templates.
 
@@ -180,6 +180,23 @@ When instructions conflict:
 7. Escalate when resolving the conflict requires a business decision, authorization, or material change.
 
 Do not resolve a conflict by silently discarding either source.
+
+### 4.10 Originality, provenance, and quality
+
+Create project-specific documentation, skill instructions, templates, examples, and implementation in original wording and structure wherever practical. Do not copy or closely imitate third-party expressive material without permission or a license that allows the intended use.
+
+Originality is not a requirement to reinvent established engineering practice. Use appropriate standards, common terminology, proven design patterns, and mature techniques when they best serve correctness, security, maintainability, reliability, and the user's requirements. Do not choose an inferior or unfamiliar approach merely to make the work appear unique.
+
+Apply these rules proportionately:
+- **Original expression:** Write framework-specific material for this project. Independent expression and implementation are preferred; unnecessary novelty is not.
+- **Established ideas and practices:** General concepts, methods, standards, and common engineering practices may be used and adapted. Explain meaningful project-specific decisions in our own words.
+- **Third-party material:** Before incorporating identifiable third-party text, code, templates, assets, or other protected material, verify that the source and license or permission allow the intended use. Preserve required notices and attribution.
+- **External influence:** When a specific external work materially informs a design or a substantial project decision, record the source and describe the influence in the root PROVENANCE.md. Routine use of generic engineering knowledge does not need an entry.
+- **No close imitation:** Do not reproduce distinctive wording, organization, examples, or other expressive choices from a source merely by changing a few words. When in doubt, summarize the underlying idea independently and cite the source where relevant.
+- **Honest claims:** Do not claim that all project material is wholly original, exclusively human-authored, or guaranteed copyrightable. Disclose material AI assistance and respect the limits of applicable law and third-party rights.
+- **Quality first:** These requirements must not weaken the solution. Prefer the best suitable, well-supported engineering approach while ensuring that incorporated material has a clear and lawful provenance.
+
+Before a public release or material third-party incorporation, review provenance, license compatibility, required notices, and any unresolved ownership or permission questions. PROVENANCE.md is a practical record, not a guarantee of legal clearance.
 
 ## 5. Standalone skills
 
@@ -594,6 +611,7 @@ The intended source repository structure is:
     ├── M1-BLUEPRINT.md
     ├── VERSION
     ├── LICENSE
+    ├── PROVENANCE.md
     ├── principles/
     │   └── engineering-principles.md
     ├── workflows/
@@ -656,6 +674,8 @@ The repository is intended to be distributed under the **Apache License, Version
 - Contributions from other people remain subject to the project's contribution terms and the applicable license.
 
 Project attribution describes the maintainer's role; it is not a legal determination of copyright ownership over every element. Confirm licensing rights before distributing or relying on the license commercially.
+
+The root `PROVENANCE.md` records material external influences and identifiable third-party material incorporated into the repository. Keep it concise and update it when such material or influence is added. It is not necessary to cite generic engineering knowledge or every routine reference consulted during development.
 
 ### 11.2 Codex adapter README
 
@@ -895,3 +915,4 @@ Implementation details that depend on current Codex behavior must be verified du
 | 2026-11-02 | Clarified native review execution strategy, specified Apache-2.0 licensing, and generalized sample application references. |
 | 2026-11-02 | Expanded Intent to support guided discovery from vague ideas, distinguished discovery from market validation, and deferred product backlog decomposition beyond M1. |
 | 2026-11-03 | Added Product Decomposition to M1 as an optional, standalone, progressive initiative-level capability; defined product-breakdown artifact, workflow handoff, approval, installation, and validation implications. |
+| 2026-11-04 | Added project-wide originality, provenance, and quality principles; introduced a concise provenance record for material external influences and third-party material. |
