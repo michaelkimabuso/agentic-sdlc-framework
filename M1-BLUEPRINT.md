@@ -3,7 +3,7 @@
 **Document status:** Approved architectural direction; implementation is in progress  
 **Milestone:** M1 — Guided Idea-to-PR  
 **Framework version:** Initial development; no release version assigned  
-**Last updated:** 2026-11-02
+**Last updated:** 2026-11-03
 
 > This document is the architectural and implementation reference for M1. It records the agreed design, intended behavior, boundaries, and completion criteria. It is not a runtime instruction file and does not replace the detailed workflow, skill instructions, or templates.
 
@@ -37,9 +37,9 @@ These milestones are directional. They do not imply that later capabilities are 
 
 M1 must provide:
 - A tool-agnostic framework core.
-- Six independently invokable skills.
+- Seven independently invokable skills, including optional product-level decomposition for broad initiatives.
 - A guided Idea-to-PR workflow that composes those skills.
-- Reusable templates for work artifacts and review reports.
+- Reusable templates for initiative-level and work-item artifacts and review reports.
 - Human approval gates for requirements, implementation planning, and PR creation.
 - Adaptive Planning for justified technical changes during implementation.
 - A first coding-agent adapter for OpenAI Codex.
@@ -183,7 +183,7 @@ Do not resolve a conflict by silently discarding either source.
 
 ## 5. Standalone skills
 
-M1 contains six standalone skills. Each skill must have clearly defined inputs, outputs, responsibilities, and boundaries. It must be independently invokable and must adapt to the context and artifacts available.
+M1 contains seven standalone skills. Each skill must have clearly defined inputs, outputs, responsibilities, and boundaries. It must be independently invokable and must adapt to the context and artifacts available.
 
 Every generated artifact must contain enough context for another qualified human or agent to understand and use it without relying on the original conversation or workflow session.
 
@@ -203,9 +203,34 @@ Every generated artifact must contain enough context for another qualified human
 
 **Output:** intent.md.
 
-### 5.2 Specification
+### 5.2 Product Decomposition
 
-**Purpose:** Define what the system should do, using an idea, intent, ticket, existing requirements, or other source material.
+**Purpose:** Turn a broad initiative or product intent into a useful, owner-reviewed structure of capabilities and candidate work items, so implementation can proceed in manageable increments.
+
+Inputs may include intent.md, an existing product brief, requirements, an existing application, or a backlog that needs restructuring. Intent is useful context but is not mandatory when equivalent information exists.
+
+Responsibilities:
+- Understand the initiative's desired outcomes, users, constraints, known assumptions, and evidence gaps.
+- Identify meaningful product capabilities or areas of value, then candidate epics or deliverables and work items where useful.
+- Describe the purpose and expected outcome of each proposed item at an appropriate level; avoid prematurely writing detailed acceptance criteria for every item.
+- Identify dependencies, sequencing constraints, opportunities for independently valuable increments, and a reasonable initial MVP or next increment when the available context supports it.
+- Recommend prioritization with transparent rationale, while leaving final scope and priority decisions to the owner.
+- Decompose progressively: provide a useful high-level structure first, then refine the selected capability or next increment into actionable work items. Do not generate an exhaustive speculative backlog by default.
+- Distinguish confirmed information from assumptions, hypotheses, and unanswered questions. Flag where customer, market, regulatory, or operational validation is needed; decomposition itself does not validate demand or business viability.
+- Adapt the structure to the initiative. Not every project needs every hierarchy level, and small, already-scoped tasks should bypass this skill.
+- Review the proposed breakdown with the owner and record decisions, deferred items, dependencies, and unresolved questions.
+
+Boundaries:
+- Does not replace business discovery or market validation.
+- Does not independently approve product scope, priorities, or roadmap commitments.
+- Does not produce full specifications or technical implementation plans for every candidate item.
+- Does not require an entire product backlog to be defined before the first increment can begin.
+
+**Output:** product-breakdown.md, an initiative-level, revisable structure of capabilities and candidate work items.
+
+### 5.3 Specification
+
+**Purpose:** Define what the system should do for one selected deliverable, using an intent, product breakdown item, ticket, existing requirements, or other source material.
 
 - Identify expected behavior, functional and non-functional requirements, scope, exclusions, and testable acceptance criteria.
 - Identify edge cases, failure behavior, security and data considerations, dependencies, constraints, assumptions, and open questions.
@@ -219,7 +244,7 @@ Every generated artifact must contain enough context for another qualified human
 
 M1 does not include a separate Specification Review skill. Important unresolved business questions are resolved by the human owner, and the specification performs its own completeness checks.
 
-### 5.3 Planning
+### 5.4 Planning
 
 **Purpose:** Transform an approved specification into a technically sound, executable implementation plan before application code changes begin.
 
@@ -242,7 +267,7 @@ Boundaries:
 
 **Output:** plan.md, describing intended work rather than claiming work has already occurred.
 
-### 5.4 Plan Review
+### 5.5 Plan Review
 
 **Purpose:** Independently evaluate a proposed plan before implementation.
 
@@ -256,7 +281,7 @@ Inputs: intent when applicable, approved specification, and plan.
 
 **Output:** plan-review report generated from the shared review template.
 
-### 5.5 Implementation
+### 5.6 Implementation
 
 **Purpose:** Execute the approved specification and plan while maintaining engineering quality and adapting responsibly to discoveries.
 
@@ -282,7 +307,7 @@ Boundaries:
 
 **Output:** application changes, tests, justified artifact updates, and an implementation summary.
 
-### 5.6 Code Review
+### 5.7 Code Review
 
 **Purpose:** Independently assess actual code changes for correctness, security, maintainability, regressions, and alignment with available requirements and plans.
 
@@ -303,11 +328,12 @@ Inputs: actual diff or PR; intent, specification, and plan when available.
 
 ### 6.1 Canonical templates
 
-M1 provides four templates:
+M1 provides five templates: (product-breakdown is initiative-level; the others are work-item or review templates).
 
 | Template | Purpose |
 |---|---|
 | templates/intent.md | Problem, affected users, desired outcome, context, constraints, assumptions, open questions, owner confirmation |
+| templates/product-breakdown.md | Initiative outcomes, capabilities, candidate epics/work items, dependencies, proposed increments, prioritization rationale, assumptions, owner decisions |
 | templates/spec.md | Scope, requirements, acceptance criteria, edge cases, security/data considerations, dependencies, assumptions, approval |
 | templates/plan.md | Objective, requirements references, codebase findings, technical approach, expected changes, ordered tasks, verification, risks, decisions |
 | templates/review.md | Review rounds, findings, severity, evidence, recommendations, statuses, outcomes, and resolution history |
@@ -318,12 +344,17 @@ Templates are starting structures, not mandatory paperwork. Omit irrelevant sect
 
 Default work-item artifact location:
 
+    docs/initiatives/<initiative-id>/
+    ├── intent.md
+    └── product-breakdown.md
+
+Selected work items use the project's work-item convention, defaulting to:
+
     docs/tickets/<work-item-id>/
 
 Example:
 
     docs/tickets/feature-123/
-    ├── intent.md
     ├── spec.md
     ├── plan.md
     └── reviews/
@@ -338,7 +369,7 @@ At the beginning of a workflow, determine the artifact directory and pass its ex
 
 ### 6.3 Commit policy
 
-- Commit intent.md when applicable, spec.md, and plan.md by default.
+- Commit initiative-level intent.md and product-breakdown.md when applicable, and work-item spec.md and plan.md by default.
 - Review reports are local-only by default. Commit them when auditability, team policy, or the project requires it.
 - Retain work-item artifacts after PR merge as engineering history.
 - Do not commit secrets, temporary files, or unrelated generated artifacts.
@@ -349,20 +380,22 @@ At the beginning of a workflow, determine the artifact directory and pass its ex
 
 The default flow for a new idea or feature is:
 
-1. Intent — optional when equivalent context already exists; for a vague idea, use it to facilitate initial problem and opportunity discovery.
-2. Specification — define and self-validate expected behavior.
-3. Human resolution and approval of important requirements.
-4. Planning.
-5. Fresh-session Plan Review.
-6. Bounded automated plan review/fix loop.
-7. Human plan approval.
-8. Implementation.
-9. Adaptive Planning as needed during implementation.
-10. Automated verification.
-11. Fresh-session Code Review.
-12. Bounded automated code review/fix loop, with relevant checks rerun after fixes.
-13. Human verification of the diff and manual/local behavior where appropriate.
-14. Human authorization to prepare and open the PR.
+1. Intent — optional when equivalent context already exists; for a vague idea, use it to clarify the problem, context, and desired outcomes.
+2. Product Decomposition — use when the input represents a broad initiative or product rather than one implementable deliverable. It may be skipped for already-scoped work.
+3. Owner review and approval of the proposed product breakdown and selection of the next work item or increment.
+4. Specification — define and self-validate expected behavior for the selected work item.
+5. Human resolution and approval of important requirements.
+6. Planning.
+7. Fresh-session Plan Review.
+8. Bounded automated plan review/fix loop.
+9. Human plan approval.
+10. Implementation.
+11. Adaptive Planning as needed during implementation.
+12. Automated verification.
+13. Fresh-session Code Review.
+14. Bounded automated code review/fix loop, with relevant checks rerun after fixes.
+15. Human verification of the diff and manual/local behavior where appropriate.
+16. Human authorization to prepare and open the PR.
 
 The workflow coordinates skills and gates. It should not duplicate their detailed instructions.
 
@@ -371,7 +404,9 @@ The workflow coordinates skills and gates. It should not duplicate their detaile
 Do not force the full workflow when equivalent information or artifacts already exist.
 
 Examples:
-- Vague or early-stage business/product idea: use Intent to clarify the problem or opportunity and desired outcomes, then proceed to Specification when there is enough direction to define expected behavior.
+- Vague or early-stage business/product idea: use Intent to clarify the problem or opportunity, then Product Decomposition to shape a broad initiative into candidate increments; select one and proceed to Specification.
+- Broad, already-articulated product initiative: Product Decomposition can start from the existing brief or requirements without creating a duplicate Intent.
+- Existing backlog or product: invoke Product Decomposition independently to review or restructure it; preserve owner-approved commitments and distinguish proposed changes.
 - More developed idea without a ticket: use Intent to refine the context if needed, then Specification, Planning, and subsequent stages.
 - Existing complete ticket: start at Specification or Planning as appropriate.
 - Clear, small bug with reproduction: start at Planning or Implementation depending on complexity.
@@ -385,6 +420,7 @@ At the start, determine available artifacts, project context, and current stage.
 
 M1 requires explicit human approval at consequential decision points:
 - Confirm intent when the optional Intent stage is used.
+- Review and approve the product breakdown and select the next increment when Product Decomposition is used.
 - Approve requirements/specification before planning proceeds.
 - Approve the implementation plan before implementation begins.
 - Resolve business decisions or changes to scope, expected behavior, or acceptance criteria.
@@ -493,6 +529,8 @@ The intended Codex installation location is:
     └── skills/
         ├── intent/
         │   └── SKILL.md
+        ├── product-decomposition/
+        │   └── SKILL.md
         ├── specification/
         │   └── SKILL.md
         ├── planning/
@@ -519,6 +557,7 @@ The intended shared resource layout is:
     │   └── idea-to-pr.md
     └── templates/
         ├── intent.md
+        ├── product-breakdown.md
         ├── spec.md
         ├── plan.md
         └── review.md
@@ -562,6 +601,8 @@ The intended source repository structure is:
     ├── skills/
     │   ├── intent/
     │   │   └── SKILL.md
+    │   ├── product-decomposition/
+    │   │   └── SKILL.md
     │   ├── specification/
     │   │   └── SKILL.md
     │   ├── planning/
@@ -574,6 +615,7 @@ The intended source repository structure is:
     │       └── SKILL.md
     ├── templates/
     │   ├── intent.md
+    │   ├── product-breakdown.md
     │   ├── spec.md
     │   ├── plan.md
     │   └── review.md
@@ -650,8 +692,8 @@ Keep the framework clone as the development and distribution workspace for maint
 
 The installer:
 - Validates the target and selected adapter.
-- Copies the six skills into .agents/skills/.
-- Copies principles, workflow, and templates into .agentic-sdlc/.
+- Copies the seven skills into .agents/skills/.
+- Copies principles, workflow, and templates (including product-breakdown.md) into .agentic-sdlc/.
 - Writes installed version information.
 - Generates and maintains a manifest of framework-managed files and integrity information.
 - Safely adds or updates the managed section in AGENTS.md.
@@ -752,6 +794,10 @@ Scenarios should include:
 - Unresolved blocking findings after the maximum review rounds.
 - Existing artifacts that make one or more workflow stages unnecessary.
 - Standalone skill invocation with incomplete optional context.
+- Vague initiative clarified into intent, then progressively decomposed into candidate capabilities and a selected first increment.
+- Product Decomposition invoked from an existing brief or backlog without requiring a new intent artifact.
+- Small, already-scoped work item bypasses Product Decomposition.
+- Owner rejects or reprioritizes proposed work, and the agent preserves the decision without silently generating an approved backlog.
 
 Each scenario defines minimum input/context, expected behavior, failure signals, and relevant workflow or skill.
 
@@ -764,15 +810,16 @@ Validate the installed framework in a real sample application using Codex.
 At minimum:
 1. Install the framework into a sample application.
 2. Confirm Codex discovers all six installed skills using verified native conventions.
-3. Invoke each skill independently.
-4. Exercise the Idea-to-PR workflow with a representative task.
-5. Verify artifact paths and template references.
-6. Verify human approval gates.
-7. Exercise plan review and code review loops, including bounded stopping behavior.
-8. Exercise Adaptive Planning and escalation behavior.
-9. Verify that project instructions and framework principles are interpreted according to the conflict policy.
-10. Test installer update and local customization conflict handling.
-11. Record actual commands, outcomes, limitations, and any deviations.
+3. Confirm Codex discovers all seven installed skills using verified native conventions.
+4. Invoke each skill independently.
+5. Exercise the Idea-to-PR workflow with a representative task, including a broad initiative that requires decomposition and a scoped task that skips it.
+6. Verify artifact paths and template references.
+7. Verify human approval gates, including owner approval of product breakdown decisions.
+8. Exercise plan review and code review loops, including bounded stopping behavior.
+9. Exercise Adaptive Planning and escalation behavior.
+10. Verify that project instructions and framework principles are interpreted according to the conflict policy.
+11. Test installer update and local customization conflict handling.
+12. Record actual commands, outcomes, limitations, and any deviations.
 
 A syntactically valid skill or successful file copy is not proof that Codex can use the framework correctly.
 
@@ -797,8 +844,9 @@ M1 is complete only when all of the following are satisfied:
 
 ### Framework core
 - [ ] Shared engineering principles are documented and referenced consistently.
-- [ ] All six standalone skills have defined inputs, outputs, boundaries, and behavior.
-- [ ] Four canonical templates exist: intent, spec, plan, and review.
+- [ ] All seven standalone skills have defined inputs, outputs, boundaries, and behavior.
+- [ ] Five canonical templates exist: intent, product-breakdown, spec, plan, and review.
+- [ ] Product Decomposition supports progressive decomposition of broad initiatives and can be skipped for already-scoped work.
 - [ ] Idea-to-PR workflow supports idea-driven and task-driven entry points.
 - [ ] Workflow can skip stages when equivalent approved information exists.
 - [ ] Human approval gates and stop/escalation rules are explicit.
@@ -825,8 +873,8 @@ Do not mark a criterion complete based only on planned behavior. Record evidence
 ## 16. Deferred decisions and future work
 
 The following remain outside M1 or require later evidence:
-- A dedicated product-discovery and business-validation capability beyond the initial guided discovery supported by the Intent skill.
-- Product-level decomposition into epics, capabilities, and a prioritized backlog of implementation tickets. M1 handles a focused idea or work item through PR; it does not require generating an entire product backlog upfront. A future capability may support progressive decomposition and refinement as priorities and evidence evolve.
+- A dedicated product-discovery and business-validation capability beyond the initial guided discovery supported by the Intent skill. Product Decomposition may identify evidence gaps but does not perform market validation.
+- Advanced product portfolio management, roadmap governance, quantitative prioritization frameworks, and automated backlog synchronization with external project-management tools.
 - Claude Code adapter and CLAUDE.md integration.
 - Additional coding-agent adapters.
 - Automated evaluation infrastructure for regression scenarios.
@@ -846,3 +894,4 @@ Implementation details that depend on current Codex behavior must be verified du
 | 2026-11-01 | Initial consolidated M1 architecture and implementation blueprint based on agreed design decisions. |
 | 2026-11-02 | Clarified native review execution strategy, specified Apache-2.0 licensing, and generalized sample application references. |
 | 2026-11-02 | Expanded Intent to support guided discovery from vague ideas, distinguished discovery from market validation, and deferred product backlog decomposition beyond M1. |
+| 2026-11-03 | Added Product Decomposition to M1 as an optional, standalone, progressive initiative-level capability; defined product-breakdown artifact, workflow handoff, approval, installation, and validation implications. |
