@@ -829,7 +829,6 @@ Validate the installed framework in a real sample application using Codex.
 
 At minimum:
 1. Install the framework into a sample application.
-2. Confirm Codex discovers all six installed skills using verified native conventions.
 3. Confirm Codex discovers all seven installed skills using verified native conventions.
 4. Invoke each skill independently.
 5. Exercise the Idea-to-PR workflow with a representative task, including a broad initiative that requires decomposition and a scoped task that skips it.
@@ -916,3 +915,4 @@ Implementation details that depend on current Codex behavior must be verified du
 | 2026-11-02 | Expanded Intent to support guided discovery from vague ideas, distinguished discovery from market validation, and deferred product backlog decomposition beyond M1. |
 | 2026-11-03 | Added Product Decomposition to M1 as an optional, standalone, progressive initiative-level capability; defined product-breakdown artifact, workflow handoff, approval, installation, and validation implications. |
 | 2026-11-04 | Added project-wide originality, provenance, and quality principles; introduced a concise provenance record for material external influences and third-party material. |
+| 2026-11-06 | Clarified the M1 workflow's conditional Product Decomposition, separate bounded review activities, approval gates, and flexible entry points; corrected the Codex skill-discovery checklist. |
