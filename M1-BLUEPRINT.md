@@ -830,15 +830,15 @@ Validate the installed framework in a real sample application using Codex.
 At minimum:
 1. Install the framework into a sample application.
 2. Confirm Codex discovers all seven installed skills using verified native conventions.
-4. Invoke each skill independently.
-5. Exercise the Idea-to-PR workflow with a representative task, including a broad initiative that requires decomposition and a scoped task that skips it.
-6. Verify artifact paths and template references.
-7. Verify human approval gates, including owner approval of product breakdown decisions.
-8. Exercise plan review and code review loops, including bounded stopping behavior.
-9. Exercise Adaptive Planning and escalation behavior.
-10. Verify that project instructions and framework principles are interpreted according to the conflict policy.
-11. Test installer update and local customization conflict handling.
-12. Record actual commands, outcomes, limitations, and any deviations.
+3. Invoke each skill independently.
+4. Exercise the Idea-to-PR workflow with a representative task, including a broad initiative that requires decomposition and a scoped task that skips it.
+5. Verify artifact paths and template references.
+6. Verify human approval gates, including owner approval of product breakdown decisions.
+7. Exercise plan review and code review loops, including bounded stopping behavior.
+8. Exercise Adaptive Planning and escalation behavior.
+9. Verify that project instructions and framework principles are interpreted according to the conflict policy.
+10. Test installer update and local customization conflict handling.
+11. Record actual commands, outcomes, limitations, and any deviations.
 
 A syntactically valid skill or successful file copy is not proof that Codex can use the framework correctly.
 
