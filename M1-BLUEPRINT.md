@@ -829,7 +829,7 @@ Validate the installed framework in a real sample application using Codex.
 
 At minimum:
 1. Install the framework into a sample application.
-3. Confirm Codex discovers all seven installed skills using verified native conventions.
+2. Confirm Codex discovers all seven installed skills using verified native conventions.
 4. Invoke each skill independently.
 5. Exercise the Idea-to-PR workflow with a representative task, including a broad initiative that requires decomposition and a scoped task that skips it.
 6. Verify artifact paths and template references.
