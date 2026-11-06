@@ -6,7 +6,8 @@ This directory documents how the tool-agnostic workflow is mapped to OpenAI Code
 
 - Tell Codex where to find and follow the workflow and artifact templates.
 - Make the current stage, approved artifacts, and next expected output explicit.
-- Preserve approval gates: do not move from intent to specification, specification to planning, plan to implementation, or human verification to PR creation without the approvals defined by the workflow.
+- Preserve the workflow's conditional approval gates, including owner approval of a product breakdown and increment selection when Product Decomposition is used, specification approval, plan approval after Plan Review, approval of material scope/behavior changes, and authorization before PR creation.
+- Invoke Plan Review and Code Review as separate activities in fresh sessions by default; preserve their bounded review/fix loops and human approval gates.
 - Use Codex's native repository and coding capabilities rather than introducing a custom orchestration engine.
 - Report tool limitations and verification results honestly.
 
