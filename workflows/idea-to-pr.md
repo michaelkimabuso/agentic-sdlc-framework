@@ -10,9 +10,9 @@ Move software work from an idea, initiative, or existing task to a reviewable pu
 
 Choose the narrowest entry point that preserves the context and decisions needed for safe delivery. Do not force every task through every stage.
 
-- **Vague idea:** Start with Intent to clarify the problem, affected people, desired outcomes, context, and constraints. Continue to Product Decomposition when the idea describes a broad initiative or product.
-- **Broad, articulated initiative:** Start with Product Decomposition when the brief or requirements already provide sufficient context. Do not create a duplicate Intent artifact merely to satisfy the sequence.
-- **Existing product or backlog:** Product Decomposition may be invoked independently to review or restructure capabilities and candidate work items. Preserve owner-approved commitments unless the owner authorizes changes.
+- **Vague idea:** Start with Intent to clarify the problem, affected people, desired outcomes, context, and constraints. Continue to Product Breakdown when the idea describes a broad initiative or product.
+- **Broad, articulated initiative:** Start with Product Breakdown when the brief or requirements already provide sufficient context. Do not create a duplicate Intent artifact merely to satisfy the sequence.
+- **Existing product or backlog:** Product Breakdown may be invoked independently to review or restructure capabilities and candidate work items. Preserve owner-approved commitments unless the owner authorizes changes.
 - **Scoped feature or complete ticket:** Start with Specification when requirements are not yet sufficiently explicit, or Planning when an approved specification/equivalent already exists.
 - **Clear, small bug or maintenance task:** Start with Planning or Implementation as appropriate when the reproduction, expected behavior, and constraints are already clear.
 - **Existing PR:** Invoke Code Review independently. Report limitations when the review context is incomplete.
@@ -33,7 +33,7 @@ Reuse equivalent, current, approved artifacts. Create only what is missing; do n
 
 **Gate:** Obtain owner confirmation of the intent before relying on it as the basis for decomposition or specification. If equivalent approved context already exists, this gate may be skipped.
 
-### 2. Product Decomposition (for broad initiatives; optional)
+### 2. Product Breakdown (for broad initiatives; optional)
 
 - Use the Intent, brief, requirements, or existing product/backlog context as input.
 - Identify meaningful capabilities and deliverables, then derive candidate work items at a useful level of detail.
@@ -155,7 +155,7 @@ Present a concise summary of behavior changed, important files, acceptance crite
 
 Obtain explicit owner approval at the relevant points:
 - Confirm Intent when a new intent artifact is needed.
-- Approve Product Decomposition and select the next increment when decomposition is used.
+- Approve Product Breakdown and select the next increment when breakdown is used.
 - Resolve important open questions and approve the Specification before Planning.
 - Approve the plan after Plan Review and before Implementation.
 - Approve material changes to scope, business behavior, acceptance criteria, or consequential constraints.

@@ -220,7 +220,7 @@ Every generated artifact must contain enough context for another qualified human
 
 **Output:** intent.md.
 
-### 5.2 Product Decomposition
+### 5.2 Product Breakdown
 
 **Purpose:** Turn a broad initiative or product intent into a useful, owner-reviewed structure of capabilities and candidate work items, so implementation can proceed in manageable increments.
 
@@ -398,7 +398,7 @@ At the beginning of a workflow, determine the artifact directory and pass its ex
 The default flow for a new idea or feature is:
 
 1. Intent — optional when equivalent context already exists; for a vague idea, use it to clarify the problem, context, and desired outcomes.
-2. Product Decomposition — use when the input represents a broad initiative or product rather than one implementable deliverable. It may be skipped for already-scoped work.
+2. Product Breakdown — use when the input represents a broad initiative or product rather than one implementable deliverable. It may be skipped for already-scoped work.
 3. Owner review and approval of the proposed product breakdown and selection of the next work item or increment.
 4. Specification — define and self-validate expected behavior for the selected work item.
 5. Human resolution and approval of important requirements.
@@ -421,9 +421,9 @@ The workflow coordinates skills and gates. It should not duplicate their detaile
 Do not force the full workflow when equivalent information or artifacts already exist.
 
 Examples:
-- Vague or early-stage business/product idea: use Intent to clarify the problem or opportunity, then Product Decomposition to shape a broad initiative into candidate increments; select one and proceed to Specification.
-- Broad, already-articulated product initiative: Product Decomposition can start from the existing brief or requirements without creating a duplicate Intent.
-- Existing backlog or product: invoke Product Decomposition independently to review or restructure it; preserve owner-approved commitments and distinguish proposed changes.
+- Vague or early-stage business/product idea: use Intent to clarify the problem or opportunity, then Product Breakdown to shape a broad initiative into candidate increments; select one and proceed to Specification.
+- Broad, already-articulated product initiative: Product Breakdown can start from the existing brief or requirements without creating a duplicate Intent.
+- Existing backlog or product: invoke Product Breakdown independently to review or restructure it; preserve owner-approved commitments and distinguish proposed changes.
 - More developed idea without a ticket: use Intent to refine the context if needed, then Specification, Planning, and subsequent stages.
 - Existing complete ticket: start at Specification or Planning as appropriate.
 - Clear, small bug with reproduction: start at Planning or Implementation depending on complexity.
@@ -437,7 +437,7 @@ At the start, determine available artifacts, project context, and current stage.
 
 M1 requires explicit human approval at consequential decision points:
 - Confirm intent when the optional Intent stage is used.
-- Review and approve the product breakdown and select the next increment when Product Decomposition is used.
+- Review and approve the product breakdown and select the next increment when Product Breakdown is used.
 - Approve requirements/specification before planning proceeds.
 - Approve the implementation plan before implementation begins.
 - Resolve business decisions or changes to scope, expected behavior, or acceptance criteria.
@@ -546,7 +546,7 @@ The intended Codex installation location is:
     └── skills/
         ├── intent/
         │   └── SKILL.md
-        ├── product-decomposition/
+        ├── product-breakdown/
         │   └── SKILL.md
         ├── specification/
         │   └── SKILL.md
@@ -620,7 +620,7 @@ The intended source repository structure is:
     ├── skills/
     │   ├── intent/
     │   │   └── SKILL.md
-    │   ├── product-decomposition/
+    │   ├── product-breakdown/
     │   │   └── SKILL.md
     │   ├── specification/
     │   │   └── SKILL.md
@@ -816,8 +816,8 @@ Scenarios should include:
 - Existing artifacts that make one or more workflow stages unnecessary.
 - Standalone skill invocation with incomplete optional context.
 - Vague initiative clarified into intent, then progressively decomposed into candidate capabilities and a selected first increment.
-- Product Decomposition invoked from an existing brief or backlog without requiring a new intent artifact.
-- Small, already-scoped work item bypasses Product Decomposition.
+- Product Breakdown invoked from an existing brief or backlog without requiring a new intent artifact.
+- Small, already-scoped work item bypasses Product Breakdown.
 - Owner rejects or reprioritizes proposed work, and the agent preserves the decision without silently generating an approved backlog.
 
 Each scenario defines minimum input/context, expected behavior, failure signals, and relevant workflow or skill.
@@ -866,7 +866,7 @@ M1 is complete only when all of the following are satisfied:
 - [ ] Shared engineering principles are documented and referenced consistently.
 - [ ] All seven standalone skills have defined inputs, outputs, boundaries, and behavior.
 - [ ] Five canonical templates exist: intent, product-breakdown, spec, plan, and review.
-- [ ] Product Decomposition supports progressive decomposition of broad initiatives and can be skipped for already-scoped work.
+- [ ] Product Breakdown supports progressive decomposition of broad initiatives and can be skipped for already-scoped work.
 - [ ] Idea-to-PR workflow supports idea-driven and task-driven entry points.
 - [ ] Workflow can skip stages when equivalent approved information exists.
 - [ ] Human approval gates and stop/escalation rules are explicit.
@@ -893,7 +893,7 @@ Do not mark a criterion complete based only on planned behavior. Record evidence
 ## 16. Deferred decisions and future work
 
 The following remain outside M1 or require later evidence:
-- A dedicated product-discovery and business-validation capability beyond the initial guided discovery supported by the Intent skill. Product Decomposition may identify evidence gaps but does not perform market validation.
+- A dedicated product-discovery and business-validation capability beyond the initial guided discovery supported by the Intent skill. Product Breakdown may identify evidence gaps but does not perform market validation.
 - Advanced product portfolio management, roadmap governance, quantitative prioritization frameworks, and automated backlog synchronization with external project-management tools.
 - Claude Code adapter and CLAUDE.md integration.
 - Additional coding-agent adapters.

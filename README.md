@@ -21,7 +21,7 @@ M1 is designed to guide work from an idea or existing task to an authorized, rev
 The framework separates the tool-agnostic process from its project integration and coding-agent adapters.
 
 - **Workflow:** Coordinates stages, handoffs, and human approval gates.
-- **Skills:** Define focused activities such as Intent, Product Decomposition, Specification, Planning, Plan Review, Implementation, and Code Review. The seven skills are planned; their implementation and agent behavior still require validation.
+- **Skills:** Define focused activities such as Intent, Product Breakdown, Specification, Planning, Plan Review, Implementation, and Code Review. Intent, Product Breakdown, and Specification are implemented; the other four remain planned, and agent behavior still requires validation.
 - **Templates:** Define reusable initiative, work-item, and review artifacts. The planned templates cover intent, product breakdown, specification, plan, and review reports.
 - **Adapters:** Map the framework to a coding agent's native conventions. Codex is the first planned adapter; additional adapters are deferred.
 - **Installer and validation:** Planned M1 work includes safe installation/update behavior and validation in a sample application. No installer or successful end-to-end agent validation is claimed yet.
