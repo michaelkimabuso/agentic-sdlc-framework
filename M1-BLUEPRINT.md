@@ -112,7 +112,7 @@ A workflow coordinates skills; it should not duplicate all of their detailed ins
 
 ## 4. Engineering principles
 
-The canonical shared principles live in principles/engineering-principles.md in the source repository and are installed into .agentic-sdlc/principles/engineering-principles.md.
+The canonical shared principles live in .agentic-sdlc/principles/engineering-principles.md in the source repository and are installed at that same project-root-relative path.
 
 All skills and workflows must follow these principles. They should reference the shared file rather than maintain conflicting copies of the same guidance.
 
@@ -612,8 +612,9 @@ The intended source repository structure is:
     ├── VERSION
     ├── LICENSE
     ├── PROVENANCE.md
-    ├── principles/
-    │   └── engineering-principles.md
+    ├── .agentic-sdlc/
+    │   └── principles/
+    │       └── engineering-principles.md
     ├── workflows/
     │   └── idea-to-pr.md
     ├── skills/
