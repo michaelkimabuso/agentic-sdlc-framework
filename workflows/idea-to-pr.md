@@ -14,7 +14,7 @@ Choose the narrowest entry point that preserves the context and decisions needed
 - **Broad, articulated initiative:** Start with Product Breakdown when the brief or requirements already provide sufficient context. Do not create a duplicate Intent artifact merely to satisfy the sequence.
 - **Existing product or backlog:** Product Breakdown may be invoked independently to review or restructure capabilities and candidate work items. Preserve owner-approved commitments unless the owner authorizes changes.
 - **Scoped feature or complete ticket:** Start with Specification when requirements are not yet sufficiently explicit, or Planning when an approved specification/equivalent already exists.
-- **Clear, small bug or maintenance task:** Start with Planning or Implementation as appropriate when the reproduction, expected behavior, and constraints are already clear.
+- **Clear, small bug or maintenance task:** Start with Specification when an approved source of expected behavior is missing; start with Planning when a specification or equivalent requirements source is already explicitly approved. Implementation requires an approved plan.
 - **Existing PR:** Invoke Code Review independently. Report limitations when the review context is incomplete.
 
 Reuse equivalent, current, approved artifacts. Create only what is missing; do not duplicate information to fill templates.
@@ -63,6 +63,8 @@ Skip this stage for already-scoped work where decomposition would add no meaning
 
 ### 4. Planning
 
+Planning requires an explicitly approved specification or equivalent approved requirements source. A draft specification, clear request, or approval of an earlier artifact does not by itself satisfy this gate.
+
 - Inspect the relevant codebase, architecture, tests, project instructions, and established conventions before proposing changes.
 - Map approved requirements and acceptance criteria to a coherent technical approach and ordered implementation steps.
 - Identify likely impacted areas, verification strategy, risks, dependencies, compatibility/data concerns, and assumptions.
@@ -70,6 +72,8 @@ Skip this stage for already-scoped work where decomposition would add no meaning
 - Create or update `plan.md`. It must be understandable and actionable by another developer or agent without relying on the original conversation.
 
 **Output:** A concrete implementation and verification plan.
+
+**Artifact:** Save as `docs/tickets/<work-item-id>/plan.md` by default. Follow an established project convention or explicit artifact path when supplied.
 
 ### 5. Plan Review
 
@@ -85,6 +89,8 @@ Skip this stage for already-scoped work where decomposition would add no meaning
 **Bound:** Allow at most three review/fix rounds per Plan Review activity. The plan meets the review threshold when no blocking or major findings remain. If the limit is reached with unresolved blocking or major findings, stop and escalate rather than silently accepting them.
 
 **Gate:** After the review threshold is met, obtain explicit human approval of the plan before implementation. Review approval does not replace human approval.
+
+Plan Review may not modify the plan or code. Allow at most three review/fix rounds for the activity; unresolved Blocking or Major findings after round three require escalation and prevent implementation.
 
 ### 6. Implementation and Adaptive Planning
 

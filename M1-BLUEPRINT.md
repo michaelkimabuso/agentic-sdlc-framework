@@ -426,7 +426,7 @@ Examples:
 - Existing backlog or product: invoke Product Breakdown independently to review or restructure it; preserve owner-approved commitments and distinguish proposed changes.
 - More developed idea without a ticket: use Intent to refine the context if needed, then Specification, Planning, and subsequent stages.
 - Existing complete ticket: start at Specification or Planning as appropriate.
-- Clear, small bug with reproduction: start at Planning or Implementation depending on complexity.
+- Clear, small bug with reproduction: start at Specification if expected behavior is not explicitly approved; start at Planning when approved requirements are available. Implementation requires a human-approved plan.
 - Another developer's PR: invoke Code Review independently.
 - Technical investigation: invoke a standalone investigation activity and proceed to Planning only if implementation is needed.
 - Small maintenance task: use only the relevant standalone skills.
