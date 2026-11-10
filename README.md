@@ -5,7 +5,7 @@ A reusable, tool-agnostic framework for guiding AI coding agents through softwar
 ## Project status
 
 **Current milestone:** M1 — Guided Idea-to-PR  
-**Implementation status:** Architecture and workflow are documented; framework skills, templates, installer, and Codex integration are still being implemented and validated. This repository is not yet a ready-to-install release.
+**Implementation status:** Architecture, workflow, and all seven core skill instructions are documented. Framework regression validation, installer, and Codex integration remain in progress; this repository is not yet a ready-to-install release.
 
 M1 is designed to guide work from an idea or existing task to an authorized, reviewable pull request. It does not include automatic merging, deployment, or unrestricted autonomous operation.
 
@@ -21,7 +21,7 @@ M1 is designed to guide work from an idea or existing task to an authorized, rev
 The framework separates the tool-agnostic process from its project integration and coding-agent adapters.
 
 - **Workflow:** Coordinates stages, handoffs, and human approval gates.
-- **Skills:** Define focused activities such as Intent, Product Breakdown, Specification, Planning, Plan Review, Implementation, and Code Review. Intent, Product Breakdown, Specification, Planning, and Plan Review are implemented; Implementation and Code Review remain planned. Agent behavior still requires validation.
+- **Skills:** Define focused activities: Intent, Product Breakdown, Specification, Planning, Plan Review, Implementation, and Code Review. All seven core skill instructions are implemented; agent behavior still requires validation.
 - **Templates:** Define reusable initiative, work-item, and review artifacts. The templates cover intent, product breakdown, specification, plan, and review reports.
 - **Adapters:** Map the framework to a coding agent's native conventions. Codex is the first planned adapter; additional adapters are deferred.
 - **Installer and validation:** Planned M1 work includes safe installation/update behavior and validation in a sample application. No installer or successful end-to-end agent validation is claimed yet.

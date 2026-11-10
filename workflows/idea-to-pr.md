@@ -94,6 +94,8 @@ Plan Review may not modify the plan or code. Allow at most three review/fix roun
 
 ### 6. Implementation and Adaptive Planning
 
+Follow `skills/implementation/SKILL.md`.
+
 - Execute the approved plan against the approved specification. Before acting, validate that assumptions, project instructions, dependencies, and repository state still hold.
 - Follow established project conventions and applicable engineering standards; do not follow a stale or unsafe plan blindly.
 - Implement the required code and tests. Keep changes within approved scope.
@@ -105,6 +107,8 @@ Plan Review may not modify the plan or code. Allow at most three review/fix roun
 **Output:** Implementation changes, tests, and an updated plan where adaptation was necessary.
 
 ### 7. Automated Verification
+
+Implementation owns automated verification and reports actual results as described in `skills/implementation/SKILL.md`.
 
 - Run relevant automated tests, linters, type checks, builds, and other project-defined checks that are available and appropriate.
 - Add or update tests that demonstrate acceptance criteria and important regression cases.
@@ -118,12 +122,14 @@ Plan Review may not modify the plan or code. Allow at most three review/fix roun
 
 ### 8. Code Review
 
+Follow `skills/code-review/SKILL.md`.
+
 - Run Code Review in a fresh agent session, separate from implementation by default.
 - Review the diff against the approved specification and acceptance criteria, approved/updated plan, correctness, security, data integrity, maintainability, and test coverage.
 - The reviewer is read-only and records findings in the code-review report using the shared `review.md` template.
 - Give findings to the implementation session (or a separate fixing session) for correction. The reviewer validates fixes in a subsequent fresh round.
 - Preserve stable finding IDs and record round history, resolutions, and rationale in one consolidated report for this review activity.
-- Rerun relevant automated checks after fixes. Treat review findings as hypotheses to validate, not facts to accept blindly.
+- The implementation agent reruns relevant automated checks after fixes and provides the results for the next review. The reviewer remains read-only and does not claim to have executed checks without reliable evidence. Treat review findings as hypotheses to validate, not facts to accept blindly.
 - If a finding requires a product/business decision or material scope change, stop and ask the owner.
 
 **Outcome:** Approved, Changes Requested, or Blocked.

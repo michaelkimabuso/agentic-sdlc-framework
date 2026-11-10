@@ -300,6 +300,8 @@ Inputs: intent when applicable, approved specification, and plan.
 
 ### 5.6 Implementation
 
+The detailed procedure is in `skills/implementation/SKILL.md`.
+
 **Purpose:** Execute the approved specification and plan while maintaining engineering quality and adapting responsibly to discoveries.
 
 Inputs: approved specification and human-approved plan. Optional inputs include intent, project instructions, documentation, source code, and test suites.
@@ -310,7 +312,7 @@ Responsibilities:
 3. Identify outdated instructions, changed constraints, or differences between the plan and current reality.
 4. Implement application code and create, update, or remove appropriate automated tests.
 5. Follow established project practices and keep changes focused.
-6. Apply Adaptive Planning when technical discoveries justify a change within approved boundaries.
+6. Apply Adaptive Planning when technical discoveries justify a change within approved boundaries. A technical adaptation that preserves approved requirements and constraints does not itself add an approval gate.
 7. Update plan.md when material technical changes occur. Update spec.md only when justified to clarify technical details or constraints without silently changing expected behavior.
 8. Record significant discoveries, deviations, rationale, and impact.
 9. Run relevant tests and checks, investigate failures, and verify acceptance criteria.
@@ -326,6 +328,8 @@ Boundaries:
 
 ### 5.7 Code Review
 
+The detailed procedure is in `skills/code-review/SKILL.md`.
+
 **Purpose:** Independently assess actual code changes for correctness, security, maintainability, regressions, and alignment with available requirements and plans.
 
 Inputs: actual diff or PR; intent, specification, and plan when available.
@@ -338,6 +342,7 @@ Inputs: actual diff or PR; intent, specification, and plan when available.
 - Distinguish confirmed defects from suggestions.
 - Operate read-only; report findings rather than changing code.
 - Reuse stable finding IDs across rounds.
+- Use no more than three review/fix rounds. Code Review passes with zero Blocking findings; Major and lower-severity findings remain visible for owner consideration.
 
 **Output:** code-review report generated from the shared review template.
 
@@ -482,7 +487,7 @@ Initial default maximum: three rounds per review activity. This is a safety cap,
 - Plan Review approval threshold: no blocking or major findings.
 - Code Review approval threshold: no blocking findings.
 - Minor findings and suggestions remain visible for human judgment.
-- If the maximum is reached with unresolved blocking or major findings, stop and escalate to a human.
+- If the maximum is reached with findings above the applicable review threshold, stop and escalate to a human. For Plan Review that includes Blocking or Major findings; for Code Review it means unresolved Blocking findings. Major Code Review findings remain visible for owner consideration but do not automatically block.
 - Do not mark a review approved while its applicable blocking threshold is unmet.
 
 Human approval remains separate from an agent's review outcome.
