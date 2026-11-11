@@ -3,7 +3,7 @@
 **Document status:** Approved architectural direction; implementation is in progress  
 **Milestone:** M1 — Guided Idea-to-PR  
 **Framework version:** Initial development; no release version assigned  
-**Last updated:** 2026-11-04
+**Last updated:** 2026-11-12
 
 > This document is the architectural and implementation reference for M1. It records the agreed design, intended behavior, boundaries, and completion criteria. It is not a runtime instruction file and does not replace the detailed workflow, skill instructions, or templates.
 
@@ -537,11 +537,11 @@ The latest approved specification and the plan with documented, authorized adapt
 
 ### 10.1 Adapter principles
 
-Codex is the first supported coding-agent adapter. Its exact skill-discovery and instruction requirements must be verified against the current Codex environment and documentation before the adapter is considered validated.
+Codex is the first coding-agent adapter. This adapter increment documents and validates selected conventions in Codex CLI 0.167.0 on Linux/WSL2 x86_64. See `adapters/codex/README.md` for the evidence and limits. This does not establish compatibility with all Codex versions, clients, hosts, or configurations.
 
 Use Codex's native skill, repository-instruction, and review mechanisms where suitable. In particular, prefer Codex's native code-review capability (such as `/review`) for review execution when it is available and compatible with the framework's review requirements. Keep Codex-specific commands, syntax, and conventions in adapters/codex/ and avoid leaking them into the framework core.
 
-The framework's Code Review skill remains responsible for the review process, inputs, criteria, finding format and lifecycle, review rounds, and outcome rules. The adapter selects the strongest suitable execution mechanism supported by the coding agent.
+The framework's Code Review skill remains responsible for the review process, inputs, criteria, finding format and lifecycle, review rounds, and outcome rules. Current Codex documentation describes `/review` as a dedicated local-diff reviewer that reports prioritized findings without changing the working tree. The adapter can use it as a finding-generation mechanism, but must not assume it loads the framework skill, receives all approved baselines, emits the framework report schema, or preserves finding history and thresholds. See `adapters/codex/README.md` for the supported use and fallback. Verify behavior against the selected Codex client/version.
 
 ### 10.2 Installed skill layout
 
@@ -564,7 +564,7 @@ The intended Codex installation location is:
         └── code-review/
             └── SKILL.md
 
-The canonical source skill definitions live under skills/ in the framework repository. The adapter may copy or transform them as required by verified Codex conventions. Do not assume compatibility details without testing.
+The canonical source skill definitions live under `skills/` in the framework repository. The compatibility checks for Codex CLI 0.167.0 on Linux/WSL2 x86_64 confirmed that they can be copied verbatim to the corresponding `.agents/skills/<skill-name>/SKILL.md` paths and explicitly invoked by their frontmatter names. See `adapters/codex/README.md`; do not generalize this result to untested Codex versions or environments.
 
 ### 10.3 Installed shared resources
 
@@ -586,7 +586,7 @@ The intended shared resource layout is:
 
 ### 10.4 AGENTS.md integration
 
-The adapter provides adapters/codex/AGENTS.md.template. The installer adds its content as a clearly marked, framework-managed section in the target project's AGENTS.md.
+The adapter provides `adapters/codex/AGENTS.md.template` as a concise instruction template for eventual project integration. This increment does not define or implement installer merge behavior. Do not assume the target has no `AGENTS.md`; an installer must preserve and reconcile existing project instructions before installation.
 
 The section should:
 - Identify the framework and installed resource locations.
@@ -595,13 +595,13 @@ The section should:
 - Reinforce approval gates and boundaries.
 - Explain the default artifact location and that existing project conventions take precedence.
 
-Use explicit markers:
+If a future installer uses managed-section updates, it may define explicit markers such as:
 
     <!-- BEGIN AGENTIC-SDLC MANAGED SECTION -->
     ...
     <!-- END AGENTIC-SDLC MANAGED SECTION -->
 
-Never replace the entire project AGENTS.md. Preserve all content outside the managed section. If the managed section has been locally modified, detect and report the conflict rather than silently overwriting it.
+Any such merge and conflict behavior is future installer work. Never overwrite existing project instructions silently.
 
 AGENTS.md is a project instruction source, not unquestionable truth. Apply the conflict-handling policy in Section 4.9.
 
@@ -831,7 +831,7 @@ When an agent failure occurs, capture a minimal reproducible scenario, diagnose 
 
 ### 14.3 Codex integration validation
 
-Validate the installed framework in a real sample application using Codex.
+Validate framework behavior in a real sample application using Codex after installation support exists. The adapter can also be checked in a disposable project before the installer is implemented; such checks do not count as installer or complete end-to-end validation.
 
 At minimum:
 1. Install the framework into a sample application.
@@ -843,7 +843,7 @@ At minimum:
 7. Exercise plan review and code review loops, including bounded stopping behavior.
 8. Exercise Adaptive Planning and escalation behavior.
 9. Verify that project instructions and framework principles are interpreted according to the conflict policy.
-10. Test installer update and local customization conflict handling.
+10. Test installer update and local customization conflict handling once the installer exists.
 11. Record actual commands, outcomes, limitations, and any deviations.
 
 A syntactically valid skill or successful file copy is not proof that Codex can use the framework correctly.
@@ -879,8 +879,8 @@ M1 is complete only when all of the following are satisfied:
 - [ ] Adaptive Planning rules are explicit and traceable.
 
 ### Codex adapter and installation
-- [ ] Current Codex skill-discovery and instruction conventions have been verified.
-- [ ] Codex adapter instructions and AGENTS.md template exist.
+- [x] Current Codex skill-discovery and instruction conventions have been verified for the documented Codex CLI 0.167.0 Linux/WSL2 environment.
+- [x] Codex adapter instructions and AGENTS.md template exist.
 - [ ] Installer supports fresh installation and safe updates.
 - [ ] Installer preserves project-owned instructions and local modifications.
 - [ ] Manifest and version tracking support conflict detection.
