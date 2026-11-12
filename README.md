@@ -5,7 +5,7 @@ A reusable, tool-agnostic framework for guiding AI coding agents through softwar
 ## Project status
 
 **Current milestone:** M1 — Guided Idea-to-PR  
-**Implementation status:** The tool-agnostic core and Codex adapter guide/template are documented. A compatibility spike and adapter validation are limited to the Codex CLI 0.167.0 Linux/WSL2 environment described in [the adapter guide](adapters/codex/README.md). Framework regression validation, the installer, and end-to-end sample-application validation remain incomplete; this repository is not a ready-to-install release.
+**Implementation status:** The tool-agnostic core and Codex adapter are implemented, including a standard-library installer and automated installer tests. Codex compatibility evidence remains limited to the CLI 0.167.0 Linux/WSL2 environment described in [the adapter guide](adapters/codex/README.md). End-to-end sample-application workflow validation remains incomplete; this is an unreleased development version.
 
 M1 is designed to guide work from an idea or existing task to an authorized, reviewable pull request. It does not include automatic merging, deployment, or unrestricted autonomous operation.
 
@@ -23,12 +23,18 @@ The framework separates the tool-agnostic process from its project integration a
 - **Workflow:** Coordinates stages, handoffs, and human approval gates.
 - **Skills:** Define focused activities: Intent, Product Breakdown, Specification, Planning, Plan Review, Implementation, and Code Review. All seven core skill instructions are implemented; agent behavior still requires validation.
 - **Templates:** Define reusable initiative, work-item, and review artifacts. The templates cover intent, product breakdown, specification, plan, and review reports.
-- **Adapters:** Map the framework to a coding agent's native conventions. The Codex adapter guide and `AGENTS.md` template are present; additional adapters are deferred.
-- **Installer and validation:** Safe installation/update behavior and end-to-end validation in a sample application remain planned M1 work. The Codex adapter's limited compatibility checks do not establish that an installer or complete workflow is ready.
+- **Adapters:** Map the framework to a coding agent's native conventions. The Codex adapter includes its installer; additional adapters are deferred.
+- **Installer and validation:** The Codex installer copies framework resources and protects modified managed files during updates. Automated installer tests cover these behaviors; end-to-end validation in a sample application remains incomplete.
 
 ## Installation and use
 
-There is no supported installation process or released package yet. The [M1 Blueprint](M1-BLUEPRINT.md) documents the intended installer design, and [the Codex adapter guide](adapters/codex/README.md) documents the target layout and limited validation. Do not treat the repository as a functioning drop-in framework.
+The Codex adapter can be installed from a framework checkout using Python 3.10 or newer:
+
+```sh
+python3 adapters/codex/install.py --target ../your-project --adapter codex
+```
+
+See [the Codex adapter guide](adapters/codex/README.md) for update behavior, conflicts, and limitations. This is an unreleased development installer; it does not run Codex or validate an application's workflow.
 
 ## Contributing
 

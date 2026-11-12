@@ -2,21 +2,62 @@
 
 This adapter makes the tool-agnostic Agentic SDLC Framework usable in Codex. The authoritative process remains [`workflows/idea-to-pr.md`](../../workflows/idea-to-pr.md), with detailed behavior in the seven core skills and structure in the shared templates. This guide and [`AGENTS.md.template`](AGENTS.md.template) translate those resources into Codex project conventions; Codex-specific instructions belong here, not in the core skills.
 
-## Project layout
+## Installation
 
-The eventual project layout is:
+Prerequisite: Python 3.10 or newer; the installer uses only the standard library. Keep this framework checkout available when you want to update an installed project. From the framework repository, run:
+
+```sh
+python3 adapters/codex/install.py --target ../sample-app --adapter codex
+```
+
+Run the automated installer tests from the repository root with `python3 -m unittest discover -s adapters/codex/tests -v`.
+
+The target must be an existing project directory. The installer uses paths relative to that directory and copies resources, so the installed project does not depend on the checkout to use the framework. It does not run Codex, generate project artifacts, execute application tests, or create a Git repository.
+
+## Installed layout
+
+The installed project layout is:
 
 ```text
 project-root/
-├── AGENTS.md                         # installed from this adapter's template
+├── AGENTS.md                         # existing instructions plus a marked managed section
 ├── .agents/skills/<skill-name>/SKILL.md
 └── .agentic-sdlc/
+    ├── VERSION
+    ├── manifest.json
     ├── principles/engineering-principles.md
     ├── workflows/idea-to-pr.md
     └── templates/*.md
 ```
 
-In this source repository, `skills/<skill-name>/SKILL.md` maps to `.agents/skills/<skill-name>/SKILL.md`; `workflows/idea-to-pr.md`, `templates/`, and `.agentic-sdlc/` map under `.agentic-sdlc/` at the project root; and `adapters/codex/AGENTS.md.template` is the source for a future project-root `AGENTS.md`. The adapter does not install or update these files. There is no installer in this increment. Before using the template in a project that already has `AGENTS.md`, reconcile it with the project's instructions rather than replacing that file.
+The seven skill names and file contents are copied verbatim. The shared principle, workflow, and all five templates are copied under `.agentic-sdlc/`. The manifest records the installed version and SHA-256 hashes of framework-managed files. The installer validates its schema, version, paths, and hashes; malformed metadata stops installation before managed files are changed. It is installer bookkeeping, not a record of project-owned files.
+
+## Existing instructions, reruns, and updates
+
+If `AGENTS.md` does not exist, the installer creates it from `AGENTS.md.template` inside `<!-- BEGIN AGENTIC-SDLC MANAGED SECTION -->` and `<!-- END AGENTIC-SDLC MANAGED SECTION -->` markers. If it exists without these markers, the installer appends the managed section and preserves all existing bytes. A single existing managed section is updated only while its content matches the manifest's last installed hash. Malformed or duplicate markers, or a locally changed section, are preserved and reported; the incoming section is written under `.agentic-sdlc/conflicts/` for review.
+
+Rerunning the same version is idempotent. For a new framework version, update the framework checkout to the version you intend to install, then run:
+
+```sh
+python3 adapters/codex/install.py --target ../sample-app --adapter codex --update
+```
+
+An unchanged managed file is updated. A user-modified managed file is preserved and the incoming version is saved under `.agentic-sdlc/conflicts/`; new files are installed. Existing conflicting files not listed in the manifest are treated as user-owned and preserved. Files removed from a later framework source are reported and never deleted. If an untracked file already equals the incoming content, it is adopted into the manifest.
+
+Resolve a conflict by comparing the preserved target file with its incoming copy and manually merging the desired content into the target. Then explicitly accept that reviewed merge as a local baseline, using the project-relative managed path:
+
+```sh
+python3 adapters/codex/install.py --target ../sample-app --adapter codex --update \
+  --accept-resolved .agentic-sdlc/templates/plan.md
+```
+
+Use `--accept-resolved AGENTS.md` for a merged managed section. Repeat the option for multiple files. The option only accepts an existing, previously tracked file whose content differs from the recorded baseline; it does not authorize replacement. The installer records the accepted local hash separately from the upstream hash, so reruns preserve your merge. If upstream changes that file again, the new incoming version is reported for review while your accepted content stays in place. Review the conflict and explicitly accept it again, even if you keep the same merged content.
+
+Do not delete the manifest to bypass a conflict: without trusted history, existing differing files are treated as untracked and preserved. A malformed manifest or a symlink in a managed path stops installation; repair the manifest/path deliberately and rerun. A partial installation can be rerun to fill missing files.
+
+The installer does not create the default artifact directories, remove obsolete files, merge arbitrary edits, fetch framework versions, invoke Codex, or validate a project's workflow. Back up project instructions before manual conflict resolution.
+
+The installer suite uses disposable source and target trees. The current sixteen automated cases cover fresh install, all resources, reruns, version updates, `AGENTS.md`, manual conflict resolution, manifest validation, user edits, partial recovery, and invalid or unsafe paths. These checks do not establish end-to-end Codex workflow behavior.
 
 Codex project skills are discovered from `.agents/skills/`. The skill folders and frontmatter names are preserved exactly:
 

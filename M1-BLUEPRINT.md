@@ -586,7 +586,7 @@ The intended shared resource layout is:
 
 ### 10.4 AGENTS.md integration
 
-The adapter provides `adapters/codex/AGENTS.md.template` as a concise instruction template for eventual project integration. This increment does not define or implement installer merge behavior. Do not assume the target has no `AGENTS.md`; an installer must preserve and reconcile existing project instructions before installation.
+The adapter provides `adapters/codex/AGENTS.md.template` as a concise instruction template. The Codex installer encloses it in explicit managed-section markers. It appends that section to an existing marker-free `AGENTS.md`, preserving existing content. It updates a marked section only when its hash matches the installation manifest; a modified section is preserved and the incoming version is written to `.agentic-sdlc/conflicts/` for manual resolution. Malformed or duplicate markers are reported without modifying the file.
 
 The section should:
 - Identify the framework and installed resource locations.
@@ -595,13 +595,13 @@ The section should:
 - Reinforce approval gates and boundaries.
 - Explain the default artifact location and that existing project conventions take precedence.
 
-If a future installer uses managed-section updates, it may define explicit markers such as:
+The installer uses these explicit markers:
 
     <!-- BEGIN AGENTIC-SDLC MANAGED SECTION -->
     ...
     <!-- END AGENTIC-SDLC MANAGED SECTION -->
 
-Any such merge and conflict behavior is future installer work. Never overwrite existing project instructions silently.
+Never overwrite existing project instructions silently.
 
 AGENTS.md is a project instruction source, not unquestionable truth. Apply the conflict-handling policy in Section 4.9.
 
@@ -646,13 +646,11 @@ The intended source repository structure is:
     ├── adapters/
     │   └── codex/
     │       ├── README.md
-    │       └── AGENTS.md.template
-    ├── scripts/
-    │   └── install.py
+    │       ├── AGENTS.md.template
+    │       ├── install.py
+    │       └── tests/
+    │           └── test_install.py
     └── tests/
-        ├── installer/
-        │   ├── fixtures/
-        │   └── test_*.py
         ├── regression/
         │   ├── README.md
         │   └── *.md
@@ -708,7 +706,7 @@ Example workspace:
 Example command:
 
     cd agentic-sdlc-framework
-    python scripts/install.py --target ../sample-app --adapter codex
+    python3 adapters/codex/install.py --target ../sample-app --adapter codex
 
 Installation is copy-based. The application receives a self-contained copy of required runtime resources and does not depend on the framework clone after installation.
 
@@ -720,11 +718,11 @@ The installer:
 - Validates the target and selected adapter.
 - Copies the seven skills into .agents/skills/.
 - Copies principles, workflow, and templates (including product-breakdown.md) into .agentic-sdlc/.
-- Writes installed version information.
-- Generates and maintains a manifest of framework-managed files and integrity information.
+- Writes installed version information and a manifest with SHA-256 hashes for managed files.
 - Safely adds or updates the managed section in AGENTS.md.
-- Creates the default artifact directory only when needed and when the project has no established equivalent.
 - Reports actions, conflicts, and errors clearly.
+
+The installer does not scaffold artifact directories; users and skills follow the target project's existing documentation conventions.
 
 The installer must use Python's standard library only for M1. It should be dependency-free and designed for supported development environments.
 
@@ -760,15 +758,15 @@ If the managed AGENTS.md section has been locally modified, preserve it and repo
 
 Update the framework clone to the intended version, then run the installer in update mode:
 
-    python scripts/install.py --target ../sample-app --adapter codex --update
+    python3 adapters/codex/install.py --target ../sample-app --adapter codex --update
 
 The installer uses the checked-out framework version. It must not silently fetch or install the latest version. Updates are intentional and controlled.
 
 ### 12.6 Manifest and integrity
 
-The manifest records the installed framework version and the framework-managed file inventory with sufficient integrity metadata to distinguish unmodified files from local modifications.
+The version 1 manifest records the source version, each installed framework file's SHA-256, the hash of the managed `AGENTS.md` section, and hashes of manually accepted local resolutions. The installer validates version types, recognized managed paths, and every hash before trusting the manifest. It does not claim ownership of project files outside managed resources and the marked instruction section. The explicit `--accept-resolved PROJECT_PATH` option records a user's reviewed merge as a local baseline without replacing it with upstream content; later upstream changes still produce conflicts for review.
 
-Exact manifest schema and checksum mechanics are implementation details to finalize during installer design. They must support safe update/conflict behavior and must not claim ownership of project files outside the managed integration section.
+The manifest format may evolve as implementation evidence requires, while preserving safe update/conflict behavior and avoiding ownership claims over project files outside the managed integration section.
 
 ## 13. Versioning and releases
 
@@ -791,7 +789,7 @@ The framework's development tests stay in the framework repository. They are not
 
 ### 14.1 Installer tests
 
-Automated tests for scripts/install.py should use Python's standard unittest library and test at least:
+Automated tests for adapters/codex/install.py use Python's standard unittest library and test at least:
 - Fresh installation.
 - Installation into a project with an existing AGENTS.md.
 - Installation when AGENTS.md does not exist.
@@ -843,7 +841,7 @@ At minimum:
 7. Exercise plan review and code review loops, including bounded stopping behavior.
 8. Exercise Adaptive Planning and escalation behavior.
 9. Verify that project instructions and framework principles are interpreted according to the conflict policy.
-10. Test installer update and local customization conflict handling once the installer exists.
+10. Test installer update and local customization conflict handling.
 11. Record actual commands, outcomes, limitations, and any deviations.
 
 A syntactically valid skill or successful file copy is not proof that Codex can use the framework correctly.
@@ -881,13 +879,13 @@ M1 is complete only when all of the following are satisfied:
 ### Codex adapter and installation
 - [x] Current Codex skill-discovery and instruction conventions have been verified for the documented Codex CLI 0.167.0 Linux/WSL2 environment.
 - [x] Codex adapter instructions and AGENTS.md template exist.
-- [ ] Installer supports fresh installation and safe updates.
-- [ ] Installer preserves project-owned instructions and local modifications.
-- [ ] Manifest and version tracking support conflict detection.
-- [ ] Installer is idempotent and uses only the Python standard library.
+- [x] Installer supports fresh installation and safe updates.
+- [x] Installer preserves project-owned instructions and local modifications.
+- [x] Manifest and version tracking support conflict detection.
+- [x] Installer is idempotent and uses only the Python standard library.
 
 ### Validation
-- [ ] Automated installer tests pass.
+- [x] Automated installer tests pass. (Increment 4: sixteen automated cases pass; final M1 validation remains pending.)
 - [ ] Relevant regression scenarios have been exercised.
 - [ ] End-to-end Codex validation has been completed in a sample application.
 - [ ] Validation results and limitations are documented.
@@ -922,3 +920,4 @@ Implementation details that depend on current Codex behavior must be verified du
 | 2026-11-03 | Added Product Decomposition to M1 as an optional, standalone, progressive initiative-level capability; defined product-breakdown artifact, workflow handoff, approval, installation, and validation implications. |
 | 2026-11-04 | Added project-wide originality, provenance, and quality principles; introduced a concise provenance record for material external influences and third-party material. |
 | 2026-11-06 | Clarified the M1 workflow's conditional Product Decomposition, separate bounded review activities, approval gates, and flexible entry points; corrected the Codex skill-discovery checklist. |
+| 2026-11-12 | Added the Codex installer, manifest-backed update conflict detection, managed `AGENTS.md` sections, and disposable automated installer tests. |
