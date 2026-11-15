@@ -117,7 +117,7 @@ The documented `/review` behavior does not establish that it will load or follow
 
 ## Validation record and limits
 
-The supplied compatibility spike reports successful checks on Codex CLI 0.167.0, Linux/WSL2 x86_64, using `codex exec`: project skills were discovered from `.agents/skills/`, `$skill-name` invocation worked, skills read project-root-relative `.agentic-sdlc/` resources, `AGENTS.md` instructions were followed, and missing shared resources were reported rather than fabricated. This record is limited to that reported environment and version; it is not evidence of support across all Codex versions, clients, hosts, or configurations.
+This section records two distinct validation efforts. Increment 3 was a compatibility spike on Codex CLI 0.167.0. Increment 5 exercised the end-to-end workflow on Codex CLI 0.167.2. Both used Linux WSL2 x86_64, but they tested different behaviors; neither establishes support across other Codex versions, clients, hosts, or configurations.
 
 ### Increment 3 disposable-project validation
 
@@ -130,6 +130,20 @@ The supplied compatibility spike reports successful checks on Codex CLI 0.167.0,
 - **Missing resource handling — Pass:** in a separate project without `.agentic-sdlc/principles/engineering-principles.md`, `$intent` reported the exact missing file and requested it before proceeding; it did not fabricate the contents.
 - **Native review capability — Partially verified:** `codex exec review --help` in 0.167.0 confirmed `--uncommitted`, `--base`, and `--commit` targets plus optional custom review instructions. Current official [Developer commands](https://developers.openai.com/codex/cli/slash-commands) and [Code review](https://developers.openai.com/codex/code-review) documentation describe `/review` as starting a dedicated reviewer and reporting prioritized findings without changing the working tree. A native review run and its ability to preserve framework report fields/history/thresholds were **Not tested**.
 - **Workflow gate and review-instruction consistency — Pass:** Codex read the installed `AGENTS.md`, workflow, Plan Review skill, and Code Review skill, then accurately restated the owner gates, conditional entry paths, reviewer separation/read-only rules, three-round maximum, and both thresholds. This checks instruction accessibility and consistency; actual approval interactions and review/fix rounds were not simulated.
-- **End-to-end workflow — Not tested:** no complete workflow, real Plan Review or Code Review round, owner-approval interaction, or PR authorization sequence was run.
+- **End-to-end workflow — Not tested in Increment 3:** no complete workflow, real Plan Review or Code Review round, owner-approval interaction, or PR authorization sequence was run. See the separate Increment 5 record below.
 
-Manual regression scenarios under `tests/regression/` describe expected framework behavior; they are not behavioral test results unless explicitly run and recorded. The installer, safe merging with a project's existing `AGENTS.md`, other Codex versions/hosts, and end-to-end use on a sample application remain unvalidated.
+Manual regression scenarios under `tests/regression/` describe expected framework behavior; they are not behavioral test results unless explicitly run and recorded. The installer and safe merging with a project's existing `AGENTS.md` were covered by the automated installer suite, not by the Increment 3 compatibility spike. Other Codex versions and hosts remain unvalidated.
+
+### Increment 5 end-to-end workflow validation
+
+- **Environment:** Linux WSL2, x86_64; Codex CLI 0.167.2; Python 3.12.3 invoked as `python3`; framework commit `5e9b6e7`.
+- **Application:** disposable Python standard-library CLI application using SQLite.
+- **Automated checks — Pass:** installer suite, 16/16; sample application suite, 8/8; Python compilation check passed.
+- **Skills and workflow — Pass:** seven framework skills were discovered and used. The end-to-end workflow advanced through PR preparation. Human approval gates were observed, and Adaptive Planning was documented in the approved plan.
+- **Plan Review — Escalated as specified:** the initial activity reached its three-round limit with a Major finding open and escalated. A separate follow-up review passed its threshold after owner clarification.
+- **Code Review — Threshold met:** independent Code Review had no Blocking findings. Minor finding CR-1 remains open for owner consideration; it is not marked resolved.
+- **Review mechanism scope:** this evidence records the independent Code Review activity and its outcome. It does not establish that Codex's native `/review` or `codex review` mechanism was independently validated.
+- **PR and repository state:** workflow reached PR preparation, but no remote PR was created. The framework repository remained unchanged during validation.
+- **Limitations:** this is one disposable application and one tested Codex/Python/Linux WSL2 setup. It does not establish compatibility with other operating systems, Codex versions or clients, graphical clients, or configurations. The validation did not create a remote PR or exercise merge/deployment. CR-1 remains open, and the broader manual regression catalog is not thereby covered.
+
+The supplied validation evidence originated in the disposable WSL2 project under `/tmp`; no permanent report link is available. The Increment 5 record above summarizes the owner-supplied results.

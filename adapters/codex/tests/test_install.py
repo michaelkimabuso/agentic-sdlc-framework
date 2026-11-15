@@ -55,10 +55,24 @@ class InstallerTests(unittest.TestCase):
             (self.target / ".agentic-sdlc/principles/engineering-principles.md").read_bytes(),
             (self.source / ".agentic-sdlc/principles/engineering-principles.md").read_bytes(),
         )
+        workflow_path = self.target / ".agentic-sdlc/workflows/idea-to-pr.md"
         self.assertEqual(
-            (self.target / ".agentic-sdlc/workflows/idea-to-pr.md").read_bytes(),
+            workflow_path.read_bytes(),
             (self.source / "workflows/idea-to-pr.md").read_bytes(),
         )
+        workflow = workflow_path.read_text()
+        for installed_skill in (
+            ".agents/skills/implementation/SKILL.md",
+            ".agents/skills/code-review/SKILL.md",
+        ):
+            self.assertIn(installed_skill, workflow)
+            self.assertTrue((self.target / installed_skill).is_file())
+        for template in (self.source / "templates").glob("*.md"):
+            installed_template = f".agentic-sdlc/templates/{template.name}"
+            self.assertIn(installed_template, workflow)
+            self.assertTrue((self.target / installed_template).is_file())
+        self.assertNotRegex(workflow, r"(?<!\.agents/)skills/[^`]+")
+        self.assertNotRegex(workflow, r"(?<!\.agentic-sdlc/)templates/[^`]+\.md")
         for template in (self.source / "templates").glob("*.md"):
             self.assertEqual(
                 (self.target / ".agentic-sdlc/templates" / template.name).read_bytes(),
@@ -254,6 +268,8 @@ class InstallerTests(unittest.TestCase):
             installer.install(self.source / "VERSION")
         with self.assertRaisesRegex(RuntimeError, "must not be the framework"):
             installer.install(self.source)
+        with self.assertRaisesRegex(RuntimeError, "ancestor"):
+            installer.install(self.base)
         (self.target / ".agentic-sdlc").mkdir()
         (self.target / ".agentic-sdlc/manifest.json").write_text("not json")
         with self.assertRaisesRegex(RuntimeError, "cannot trust installer manifest"):
@@ -297,6 +313,7 @@ class InstallerTests(unittest.TestCase):
         reports = self.install()
         self.assertIn("user edit", path.read_text())
         self.assertTrue(any("CONFLICT preserved modified file" in item for item in reports))
+        self.assertFalse(any("installation is up to date" in item for item in reports))
 
     def snapshot(self):
         return {p.relative_to(self.target).as_posix(): p.read_bytes()

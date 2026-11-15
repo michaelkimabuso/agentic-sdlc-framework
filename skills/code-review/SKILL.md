@@ -24,7 +24,7 @@ After implementation verification, or independently for an existing PR when the 
 
 ## Outputs
 
-Create or update one consolidated report using `templates/review.md` (normally `<work-item-artifact-directory>/reviews/code-review.md`). Record actual review scope, baseline artifacts, limitations, round history, findings, threshold, and disposition.
+Create or update one consolidated report using the installed template at `.agentic-sdlc/templates/review.md` (normally `<work-item-artifact-directory>/reviews/code-review.md`). Record actual review scope, baseline artifacts, limitations, round history, findings, threshold, and disposition.
 
 ## Procedure
 

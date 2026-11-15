@@ -94,7 +94,7 @@ Plan Review may not modify the plan or code. Allow at most three review/fix roun
 
 ### 6. Implementation and Adaptive Planning
 
-Follow `skills/implementation/SKILL.md`.
+Follow `.agents/skills/implementation/SKILL.md`.
 
 - Execute the approved plan against the approved specification. Before acting, validate that assumptions, project instructions, dependencies, and repository state still hold.
 - Follow established project conventions and applicable engineering standards; do not follow a stale or unsafe plan blindly.
@@ -108,7 +108,7 @@ Follow `skills/implementation/SKILL.md`.
 
 ### 7. Automated Verification
 
-Implementation owns automated verification and reports actual results as described in `skills/implementation/SKILL.md`.
+Implementation owns automated verification and reports actual results as described in `.agents/skills/implementation/SKILL.md`.
 
 - Run relevant automated tests, linters, type checks, builds, and other project-defined checks that are available and appropriate.
 - Add or update tests that demonstrate acceptance criteria and important regression cases.
@@ -122,7 +122,7 @@ Implementation owns automated verification and reports actual results as describ
 
 ### 8. Code Review
 
-Follow `skills/code-review/SKILL.md`.
+Follow `.agents/skills/code-review/SKILL.md`.
 
 - Run Code Review in a fresh agent session, separate from implementation by default.
 - Review the diff against the approved specification and acceptance criteria, approved/updated plan, correctness, security, data integrity, maintainability, and test coverage.
@@ -155,11 +155,11 @@ Present a concise summary of behavior changed, important files, acceptance crite
 
 ## Review report and artifact conventions
 
-- Use the shared `templates/review.md` structure for both Plan Review and Code Review, but keep their reports separate (for example, `reviews/plan-review.md` and `reviews/code-review.md`).
+- Use the shared `.agentic-sdlc/templates/review.md` structure for both Plan Review and Code Review, but keep their reports separate (for example, `reviews/plan-review.md` and `reviews/code-review.md`).
 - Each finding should have a stable ID, severity, artifact/file and line reference where applicable, evidence/explanation, recommended correction, status, and resolution rationale.
 - Keep one consolidated report per review activity and append round history rather than creating a disconnected report for every round.
 - By default, review reports are working artifacts and need not be committed unless project policy or auditability requirements call for it.
-- Use `templates/intent.md`, `templates/product-breakdown.md`, `templates/spec.md`, `templates/plan.md`, and `templates/review.md` as starting formats, not paperwork to fill mechanically.
+- Use `.agentic-sdlc/templates/intent.md`, `.agentic-sdlc/templates/product-breakdown.md`, `.agentic-sdlc/templates/spec.md`, `.agentic-sdlc/templates/plan.md`, and `.agentic-sdlc/templates/review.md` as starting formats, not paperwork to fill mechanically.
 - Typical initiative artifacts are `intent.md` and `product-breakdown.md`; typical work-item artifacts are `spec.md` and `plan.md`. Follow the project's existing artifact conventions when they are suitable.
 - Preserve useful source artifacts such as tickets and existing requirements. Establish artifact paths at the start and pass them explicitly between stages.
 

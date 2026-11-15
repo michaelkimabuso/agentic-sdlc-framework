@@ -1,9 +1,9 @@
 # Agentic SDLC Framework — M1 Blueprint
 
-**Document status:** Approved architectural direction; implementation is in progress  
+**Document status:** Approved architectural direction; M1 implementation and Increment 5 end-to-end validation are complete. The framework remains unreleased pending a release decision.
 **Milestone:** M1 — Guided Idea-to-PR  
-**Framework version:** Initial development; no release version assigned  
-**Last updated:** 2026-11-12
+**Framework version:** `0.1.0-dev` (unreleased)
+**Last updated:** 2026-11-15
 
 > This document is the architectural and implementation reference for M1. It records the agreed design, intended behavior, boundaries, and completion criteria. It is not a runtime instruction file and does not replace the detailed workflow, skill instructions, or templates.
 
@@ -25,7 +25,7 @@ The framework should not equate agentic behavior with unrestricted autonomy. M1 
 
 | Milestone | Intended outcome | Status |
 |---|---|---|
-| M1 | Guided Idea-to-PR workflow, reusable skills, artifacts, Codex adapter, installer, and validation | Current milestone |
+| M1 | Guided Idea-to-PR workflow, reusable skills, artifacts, Codex adapter, installer, and validation | Implementation and Increment 5 end-to-end validation complete; unreleased |
 | M2 | Extend the lifecycle from PR through integration and deployment | Deferred |
 | M3 | Incorporate post-deployment feedback into the development lifecycle | Deferred |
 | M4 | Introduce controlled autonomous operation with explicit safeguards and an off switch | Deferred |
@@ -537,7 +537,7 @@ The latest approved specification and the plan with documented, authorized adapt
 
 ### 10.1 Adapter principles
 
-Codex is the first coding-agent adapter. This adapter increment documents and validates selected conventions in Codex CLI 0.167.0 on Linux/WSL2 x86_64. See `adapters/codex/README.md` for the evidence and limits. This does not establish compatibility with all Codex versions, clients, hosts, or configurations.
+Codex is the first coding-agent adapter. Increment 3 documented and validated selected conventions in Codex CLI 0.167.0 on Linux/WSL2 x86_64. Increment 5 separately validated an end-to-end workflow with Codex CLI 0.167.2 on Linux WSL2 x86_64. See `adapters/codex/README.md` for evidence and limits. These results do not establish compatibility with other Codex versions, clients, hosts, or configurations.
 
 Use Codex's native skill, repository-instruction, and review mechanisms where suitable. In particular, prefer Codex's native code-review capability (such as `/review`) for review execution when it is available and compatible with the framework's review requirements. Keep Codex-specific commands, syntax, and conventions in adapters/codex/ and avoid leaking them into the framework core.
 
@@ -829,7 +829,7 @@ When an agent failure occurs, capture a minimal reproducible scenario, diagnose 
 
 ### 14.3 Codex integration validation
 
-Validate framework behavior in a real sample application using Codex after installation support exists. The adapter can also be checked in a disposable project before the installer is implemented; such checks do not count as installer or complete end-to-end validation.
+Validate framework behavior in a sample application using Codex after installation support exists. Increment 5 completed an end-to-end validation in a disposable Python standard-library CLI application using SQLite. The evidence and remaining limits are recorded in `adapters/codex/README.md`. This result does not establish broad compatibility or release readiness.
 
 At minimum:
 1. Install the framework into a sample application.
@@ -863,18 +863,18 @@ Framework development tests are not limited to installation or update events. Th
 
 ## 15. M1 completion criteria
 
-M1 is complete only when all of the following are satisfied:
+These criteria record implementation and validation evidence. The M1 implementation and Increment 5 end-to-end workflow validation are complete; broader manual regression coverage remains a documented limitation and is not represented as exercised.
 
 ### Framework core
-- [ ] Shared engineering principles are documented and referenced consistently.
-- [ ] All seven standalone skills have defined inputs, outputs, boundaries, and behavior.
-- [ ] Five canonical templates exist: intent, product-breakdown, spec, plan, and review.
-- [ ] Product Breakdown supports progressive decomposition of broad initiatives and can be skipped for already-scoped work.
-- [ ] Idea-to-PR workflow supports idea-driven and task-driven entry points.
-- [ ] Workflow can skip stages when equivalent approved information exists.
-- [ ] Human approval gates and stop/escalation rules are explicit.
-- [ ] Plan Review and Code Review use bounded loops and stable finding IDs.
-- [ ] Adaptive Planning rules are explicit and traceable.
+- [x] Shared engineering principles are documented and referenced consistently.
+- [x] All seven standalone skills have defined inputs, outputs, boundaries, and behavior.
+- [x] Five canonical templates exist: intent, product-breakdown, spec, plan, and review.
+- [x] Product Breakdown supports progressive decomposition of broad initiatives and can be skipped for already-scoped work.
+- [x] Idea-to-PR workflow supports idea-driven and task-driven entry points.
+- [x] Workflow can skip stages when equivalent approved information exists.
+- [x] Human approval gates and stop/escalation rules are explicit.
+- [x] Plan Review and Code Review use bounded loops and stable finding IDs.
+- [x] Adaptive Planning rules are explicit and traceable.
 
 ### Codex adapter and installation
 - [x] Current Codex skill-discovery and instruction conventions have been verified for the documented Codex CLI 0.167.0 Linux/WSL2 environment.
@@ -885,11 +885,11 @@ M1 is complete only when all of the following are satisfied:
 - [x] Installer is idempotent and uses only the Python standard library.
 
 ### Validation
-- [x] Automated installer tests pass. (Increment 4: sixteen automated cases pass; final M1 validation remains pending.)
-- [ ] Relevant regression scenarios have been exercised.
-- [ ] End-to-end Codex validation has been completed in a sample application.
-- [ ] Validation results and limitations are documented.
-- [ ] No unresolved critical issue prevents the intended M1 workflow from operating safely.
+- [x] Automated installer tests pass. (Increment 5: sixteen cases passed.)
+- [ ] Relevant manual regression scenarios beyond those exercised during Increment 5 have been exercised; the repository's regression catalog remains manual.
+- [x] End-to-end Codex validation has been completed in a disposable sample application (Increment 5; see adapter validation record).
+- [x] Validation results and limitations are documented.
+- [x] No unresolved critical issue preventing the intended M1 workflow from operating safely was identified in the recorded Increment 5 validation. Minor finding CR-1 remains open for owner consideration.
 
 Do not mark a criterion complete based only on planned behavior. Record evidence from actual implementation and validation.
 
@@ -921,3 +921,4 @@ Implementation details that depend on current Codex behavior must be verified du
 | 2026-11-04 | Added project-wide originality, provenance, and quality principles; introduced a concise provenance record for material external influences and third-party material. |
 | 2026-11-06 | Clarified the M1 workflow's conditional Product Decomposition, separate bounded review activities, approval gates, and flexible entry points; corrected the Codex skill-discovery checklist. |
 | 2026-11-12 | Added the Codex installer, manifest-backed update conflict detection, managed `AGENTS.md` sections, and disposable automated installer tests. |
+| 2026-11-15 | Updated M1 implementation and validation status with Increment 5 evidence; retained untested regression coverage as incomplete and documented the unreleased version. |

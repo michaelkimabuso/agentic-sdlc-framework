@@ -22,7 +22,7 @@ Use after the owner has approved a specification. A current ticket or requiremen
 
 ## Outputs
 
-Create or update `<work-item-artifact-directory>/plan.md` using `templates/plan.md`. The default path is `docs/tickets/<work-item-id>/plan.md`; respect established project conventions and explicit artifact paths instead. Reuse existing artifacts and do not create duplicate directories.
+Create or update `<work-item-artifact-directory>/plan.md` using the installed template at `.agentic-sdlc/templates/plan.md`. The default path is `docs/tickets/<work-item-id>/plan.md`; respect established project conventions and explicit artifact paths instead. Reuse existing artifacts and do not create duplicate directories.
 
 Set the plan approval status to **Draft** when creating or materially updating it. Change the status to **Approved** only after Plan Review meets its threshold and the owner explicitly approves the plan. Review passing alone is not approval.
 

@@ -22,7 +22,7 @@ Use for a broad product or initiative, including an existing product or backlog 
 
 ## Outputs
 
-Create or update `<initiative-artifact-directory>/product-breakdown.md` using `templates/product-breakdown.md`. Use the explicit project-root-relative path agreed at workflow start; the default is `docs/initiatives/<initiative-id>/product-breakdown.md`. Reuse the artifact directory and preserve current approved decisions.
+Create or update `<initiative-artifact-directory>/product-breakdown.md` using the installed template at `.agentic-sdlc/templates/product-breakdown.md`. Use the explicit project-root-relative path agreed at workflow start; the default is `docs/initiatives/<initiative-id>/product-breakdown.md`. Reuse the artifact directory and preserve current approved decisions.
 
 Include useful capabilities, candidate deliverables/work items, dependencies and sequencing, possible increments, uncertainty, and a proposed next increment. Record the owner's approval and explicit selected increment and scope in the template's decision section.
 

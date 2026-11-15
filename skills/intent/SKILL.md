@@ -21,7 +21,7 @@ Use when the problem, opportunity, affected people, context, outcomes, or constr
 
 ## Outputs
 
-Create or update `<initiative-artifact-directory>/intent.md` using `templates/intent.md` as the starting structure. Use the explicit project-root-relative artifact path agreed at workflow start; the default is `docs/initiatives/<initiative-id>/intent.md`. Keep useful existing content and do not create a duplicate artifact directory.
+Create or update `<initiative-artifact-directory>/intent.md` using the installed template at `.agentic-sdlc/templates/intent.md` as the starting structure. Use the explicit project-root-relative artifact path agreed at workflow start; the default is `docs/initiatives/<initiative-id>/intent.md`. Keep useful existing content and do not create a duplicate artifact directory.
 
 The artifact records the problem or opportunity, affected people, current situation and evidence, desired outcomes, scope, constraints, assumptions, open questions, and owner confirmation. Label facts, assumptions, hypotheses, and unanswered questions distinctly.
 

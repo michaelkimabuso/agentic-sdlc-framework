@@ -23,7 +23,7 @@ Use after Planning has produced a plan and before the owner is asked to approve 
 
 ## Outputs
 
-Create or update the plan-review report using `templates/review.md` (normally `<work-item-artifact-directory>/reviews/plan-review.md`, unless project conventions or an explicit path say otherwise). Maintain one consolidated report for the activity and append review-round history.
+Create or update the plan-review report using the installed template at `.agentic-sdlc/templates/review.md` (normally `<work-item-artifact-directory>/reviews/plan-review.md`, unless project conventions or an explicit path say otherwise). Maintain one consolidated report for the activity and append review-round history.
 
 For each finding, record a stable ID, severity (Blocking, Major, Minor, or Suggestion), precise location, evidence, recommended correction, status, and resolution rationale. Keep IDs stable across rounds; update prior findings rather than duplicating them. Record the round, date, outcome, changed findings, and remaining threshold findings in review history.
 

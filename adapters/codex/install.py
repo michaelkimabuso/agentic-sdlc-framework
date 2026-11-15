@@ -153,8 +153,10 @@ def install(
     target = target.expanduser().resolve(strict=True)
     if not target.is_dir():
         raise RuntimeError(f"target is not a directory: {target}")
-    if target == ROOT or ROOT in target.parents:
-        raise RuntimeError("target must not be the framework repository or one of its parents")
+    if target == ROOT or ROOT in target.parents or target in ROOT.parents:
+        raise RuntimeError(
+            "target must not be the framework repository, an ancestor, or a subdirectory"
+        )
 
     state_path = target / MANIFEST
     reject_symlink_path(target, str(MANIFEST))
@@ -332,7 +334,10 @@ def install(
         manifest["resolved"] = resolved
     safe_write(state_path, (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode())
     reports.insert(0, f"Installed framework version {version} into {target}")
-    if not any(item.startswith(("installed ", "updated ", "added managed")) for item in reports):
+    if not any(
+        item.startswith(("installed ", "updated ", "added managed", "CONFLICT"))
+        for item in reports
+    ):
         reports.append("installation is up to date")
     return reports
 
