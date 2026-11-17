@@ -10,11 +10,11 @@ Move software work from an idea, initiative, or existing task to a reviewable pu
 
 Choose the narrowest entry point that preserves the context and decisions needed for safe delivery. Do not force every task through every stage.
 
-- **Vague idea:** Start with Intent to clarify the problem, affected people, desired outcomes, context, and constraints. Continue to Product Decomposition when the idea describes a broad initiative or product.
-- **Broad, articulated initiative:** Start with Product Decomposition when the brief or requirements already provide sufficient context. Do not create a duplicate Intent artifact merely to satisfy the sequence.
-- **Existing product or backlog:** Product Decomposition may be invoked independently to review or restructure capabilities and candidate work items. Preserve owner-approved commitments unless the owner authorizes changes.
+- **Vague idea:** Start with Intent to clarify the problem, affected people, desired outcomes, context, and constraints. Continue to Product Breakdown when the idea describes a broad initiative or product.
+- **Broad, articulated initiative:** Start with Product Breakdown when the brief or requirements already provide sufficient context. Do not create a duplicate Intent artifact merely to satisfy the sequence.
+- **Existing product or backlog:** Product Breakdown may be invoked independently to review or restructure capabilities and candidate work items. Preserve owner-approved commitments unless the owner authorizes changes.
 - **Scoped feature or complete ticket:** Start with Specification when requirements are not yet sufficiently explicit, or Planning when an approved specification/equivalent already exists.
-- **Clear, small bug or maintenance task:** Start with Planning or Implementation as appropriate when the reproduction, expected behavior, and constraints are already clear.
+- **Clear, small bug or maintenance task:** Start with Specification when an approved source of expected behavior is missing; start with Planning when a specification or equivalent requirements source is already explicitly approved. Implementation requires an approved plan.
 - **Existing PR:** Invoke Code Review independently. Report limitations when the review context is incomplete.
 
 Reuse equivalent, current, approved artifacts. Create only what is missing; do not duplicate information to fill templates.
@@ -33,7 +33,7 @@ Reuse equivalent, current, approved artifacts. Create only what is missing; do n
 
 **Gate:** Obtain owner confirmation of the intent before relying on it as the basis for decomposition or specification. If equivalent approved context already exists, this gate may be skipped.
 
-### 2. Product Decomposition (for broad initiatives; optional)
+### 2. Product Breakdown (for broad initiatives; optional)
 
 - Use the Intent, brief, requirements, or existing product/backlog context as input.
 - Identify meaningful capabilities and deliverables, then derive candidate work items at a useful level of detail.
@@ -63,6 +63,8 @@ Skip this stage for already-scoped work where decomposition would add no meaning
 
 ### 4. Planning
 
+Planning requires an explicitly approved specification or equivalent approved requirements source. A draft specification, clear request, or approval of an earlier artifact does not by itself satisfy this gate.
+
 - Inspect the relevant codebase, architecture, tests, project instructions, and established conventions before proposing changes.
 - Map approved requirements and acceptance criteria to a coherent technical approach and ordered implementation steps.
 - Identify likely impacted areas, verification strategy, risks, dependencies, compatibility/data concerns, and assumptions.
@@ -70,6 +72,8 @@ Skip this stage for already-scoped work where decomposition would add no meaning
 - Create or update `plan.md`. It must be understandable and actionable by another developer or agent without relying on the original conversation.
 
 **Output:** A concrete implementation and verification plan.
+
+**Artifact:** Save as `docs/tickets/<work-item-id>/plan.md` by default. Follow an established project convention or explicit artifact path when supplied.
 
 ### 5. Plan Review
 
@@ -86,7 +90,11 @@ Skip this stage for already-scoped work where decomposition would add no meaning
 
 **Gate:** After the review threshold is met, obtain explicit human approval of the plan before implementation. Review approval does not replace human approval.
 
+Plan Review may not modify the plan or code. Allow at most three review/fix rounds for the activity; unresolved Blocking or Major findings after round three require escalation and prevent implementation.
+
 ### 6. Implementation and Adaptive Planning
+
+Follow `.agents/skills/implementation/SKILL.md`.
 
 - Execute the approved plan against the approved specification. Before acting, validate that assumptions, project instructions, dependencies, and repository state still hold.
 - Follow established project conventions and applicable engineering standards; do not follow a stale or unsafe plan blindly.
@@ -100,6 +108,8 @@ Skip this stage for already-scoped work where decomposition would add no meaning
 
 ### 7. Automated Verification
 
+Implementation owns automated verification and reports actual results as described in `.agents/skills/implementation/SKILL.md`.
+
 - Run relevant automated tests, linters, type checks, builds, and other project-defined checks that are available and appropriate.
 - Add or update tests that demonstrate acceptance criteria and important regression cases.
 - Diagnose and fix in-scope failures; after fixes, rerun the relevant checks.
@@ -112,12 +122,14 @@ Skip this stage for already-scoped work where decomposition would add no meaning
 
 ### 8. Code Review
 
+Follow `.agents/skills/code-review/SKILL.md`.
+
 - Run Code Review in a fresh agent session, separate from implementation by default.
 - Review the diff against the approved specification and acceptance criteria, approved/updated plan, correctness, security, data integrity, maintainability, and test coverage.
 - The reviewer is read-only and records findings in the code-review report using the shared `review.md` template.
 - Give findings to the implementation session (or a separate fixing session) for correction. The reviewer validates fixes in a subsequent fresh round.
 - Preserve stable finding IDs and record round history, resolutions, and rationale in one consolidated report for this review activity.
-- Rerun relevant automated checks after fixes. Treat review findings as hypotheses to validate, not facts to accept blindly.
+- The implementation agent reruns relevant automated checks after fixes and provides the results for the next review. The reviewer remains read-only and does not claim to have executed checks without reliable evidence. Treat review findings as hypotheses to validate, not facts to accept blindly.
 - If a finding requires a product/business decision or material scope change, stop and ask the owner.
 
 **Outcome:** Approved, Changes Requested, or Blocked.
@@ -143,11 +155,11 @@ Present a concise summary of behavior changed, important files, acceptance crite
 
 ## Review report and artifact conventions
 
-- Use the shared `templates/review.md` structure for both Plan Review and Code Review, but keep their reports separate (for example, `reviews/plan-review.md` and `reviews/code-review.md`).
+- Use the shared `.agentic-sdlc/templates/review.md` structure for both Plan Review and Code Review, but keep their reports separate (for example, `reviews/plan-review.md` and `reviews/code-review.md`).
 - Each finding should have a stable ID, severity, artifact/file and line reference where applicable, evidence/explanation, recommended correction, status, and resolution rationale.
 - Keep one consolidated report per review activity and append round history rather than creating a disconnected report for every round.
 - By default, review reports are working artifacts and need not be committed unless project policy or auditability requirements call for it.
-- Use `templates/intent.md`, `templates/product-breakdown.md`, `templates/spec.md`, `templates/plan.md`, and `templates/review.md` as starting formats, not paperwork to fill mechanically.
+- Use `.agentic-sdlc/templates/intent.md`, `.agentic-sdlc/templates/product-breakdown.md`, `.agentic-sdlc/templates/spec.md`, `.agentic-sdlc/templates/plan.md`, and `.agentic-sdlc/templates/review.md` as starting formats, not paperwork to fill mechanically.
 - Typical initiative artifacts are `intent.md` and `product-breakdown.md`; typical work-item artifacts are `spec.md` and `plan.md`. Follow the project's existing artifact conventions when they are suitable.
 - Preserve useful source artifacts such as tickets and existing requirements. Establish artifact paths at the start and pass them explicitly between stages.
 
@@ -155,7 +167,7 @@ Present a concise summary of behavior changed, important files, acceptance crite
 
 Obtain explicit owner approval at the relevant points:
 - Confirm Intent when a new intent artifact is needed.
-- Approve Product Decomposition and select the next increment when decomposition is used.
+- Approve Product Breakdown and select the next increment when breakdown is used.
 - Resolve important open questions and approve the Specification before Planning.
 - Approve the plan after Plan Review and before Implementation.
 - Approve material changes to scope, business behavior, acceptance criteria, or consequential constraints.

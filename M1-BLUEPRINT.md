@@ -1,9 +1,9 @@
 # Agentic SDLC Framework — M1 Blueprint
 
-**Document status:** Approved architectural direction; implementation is in progress  
+**Document status:** Approved architectural direction; M1 implementation and Increment 5 end-to-end validation are complete. The framework remains unreleased pending a release decision.
 **Milestone:** M1 — Guided Idea-to-PR  
-**Framework version:** Initial development; no release version assigned  
-**Last updated:** 2026-11-04
+**Framework version:** `0.1.0-dev` (unreleased)
+**Last updated:** 2026-11-15
 
 > This document is the architectural and implementation reference for M1. It records the agreed design, intended behavior, boundaries, and completion criteria. It is not a runtime instruction file and does not replace the detailed workflow, skill instructions, or templates.
 
@@ -25,7 +25,7 @@ The framework should not equate agentic behavior with unrestricted autonomy. M1 
 
 | Milestone | Intended outcome | Status |
 |---|---|---|
-| M1 | Guided Idea-to-PR workflow, reusable skills, artifacts, Codex adapter, installer, and validation | Current milestone |
+| M1 | Guided Idea-to-PR workflow, reusable skills, artifacts, Codex adapter, installer, and validation | Implementation and Increment 5 end-to-end validation complete; unreleased |
 | M2 | Extend the lifecycle from PR through integration and deployment | Deferred |
 | M3 | Incorporate post-deployment feedback into the development lifecycle | Deferred |
 | M4 | Introduce controlled autonomous operation with explicit safeguards and an off switch | Deferred |
@@ -112,7 +112,7 @@ A workflow coordinates skills; it should not duplicate all of their detailed ins
 
 ## 4. Engineering principles
 
-The canonical shared principles live in principles/engineering-principles.md in the source repository and are installed into .agentic-sdlc/principles/engineering-principles.md.
+The canonical shared principles live in .agentic-sdlc/principles/engineering-principles.md in the source repository and are installed at that same project-root-relative path.
 
 All skills and workflows must follow these principles. They should reference the shared file rather than maintain conflicting copies of the same guidance.
 
@@ -220,7 +220,7 @@ Every generated artifact must contain enough context for another qualified human
 
 **Output:** intent.md.
 
-### 5.2 Product Decomposition
+### 5.2 Product Breakdown
 
 **Purpose:** Turn a broad initiative or product intent into a useful, owner-reviewed structure of capabilities and candidate work items, so implementation can proceed in manageable increments.
 
@@ -300,6 +300,8 @@ Inputs: intent when applicable, approved specification, and plan.
 
 ### 5.6 Implementation
 
+The detailed procedure is in `skills/implementation/SKILL.md`.
+
 **Purpose:** Execute the approved specification and plan while maintaining engineering quality and adapting responsibly to discoveries.
 
 Inputs: approved specification and human-approved plan. Optional inputs include intent, project instructions, documentation, source code, and test suites.
@@ -310,7 +312,7 @@ Responsibilities:
 3. Identify outdated instructions, changed constraints, or differences between the plan and current reality.
 4. Implement application code and create, update, or remove appropriate automated tests.
 5. Follow established project practices and keep changes focused.
-6. Apply Adaptive Planning when technical discoveries justify a change within approved boundaries.
+6. Apply Adaptive Planning when technical discoveries justify a change within approved boundaries. A technical adaptation that preserves approved requirements and constraints does not itself add an approval gate.
 7. Update plan.md when material technical changes occur. Update spec.md only when justified to clarify technical details or constraints without silently changing expected behavior.
 8. Record significant discoveries, deviations, rationale, and impact.
 9. Run relevant tests and checks, investigate failures, and verify acceptance criteria.
@@ -326,6 +328,8 @@ Boundaries:
 
 ### 5.7 Code Review
 
+The detailed procedure is in `skills/code-review/SKILL.md`.
+
 **Purpose:** Independently assess actual code changes for correctness, security, maintainability, regressions, and alignment with available requirements and plans.
 
 Inputs: actual diff or PR; intent, specification, and plan when available.
@@ -338,6 +342,7 @@ Inputs: actual diff or PR; intent, specification, and plan when available.
 - Distinguish confirmed defects from suggestions.
 - Operate read-only; report findings rather than changing code.
 - Reuse stable finding IDs across rounds.
+- Use no more than three review/fix rounds. Code Review passes with zero Blocking findings; Major and lower-severity findings remain visible for owner consideration.
 
 **Output:** code-review report generated from the shared review template.
 
@@ -398,7 +403,7 @@ At the beginning of a workflow, determine the artifact directory and pass its ex
 The default flow for a new idea or feature is:
 
 1. Intent — optional when equivalent context already exists; for a vague idea, use it to clarify the problem, context, and desired outcomes.
-2. Product Decomposition — use when the input represents a broad initiative or product rather than one implementable deliverable. It may be skipped for already-scoped work.
+2. Product Breakdown — use when the input represents a broad initiative or product rather than one implementable deliverable. It may be skipped for already-scoped work.
 3. Owner review and approval of the proposed product breakdown and selection of the next work item or increment.
 4. Specification — define and self-validate expected behavior for the selected work item.
 5. Human resolution and approval of important requirements.
@@ -421,12 +426,12 @@ The workflow coordinates skills and gates. It should not duplicate their detaile
 Do not force the full workflow when equivalent information or artifacts already exist.
 
 Examples:
-- Vague or early-stage business/product idea: use Intent to clarify the problem or opportunity, then Product Decomposition to shape a broad initiative into candidate increments; select one and proceed to Specification.
-- Broad, already-articulated product initiative: Product Decomposition can start from the existing brief or requirements without creating a duplicate Intent.
-- Existing backlog or product: invoke Product Decomposition independently to review or restructure it; preserve owner-approved commitments and distinguish proposed changes.
+- Vague or early-stage business/product idea: use Intent to clarify the problem or opportunity, then Product Breakdown to shape a broad initiative into candidate increments; select one and proceed to Specification.
+- Broad, already-articulated product initiative: Product Breakdown can start from the existing brief or requirements without creating a duplicate Intent.
+- Existing backlog or product: invoke Product Breakdown independently to review or restructure it; preserve owner-approved commitments and distinguish proposed changes.
 - More developed idea without a ticket: use Intent to refine the context if needed, then Specification, Planning, and subsequent stages.
 - Existing complete ticket: start at Specification or Planning as appropriate.
-- Clear, small bug with reproduction: start at Planning or Implementation depending on complexity.
+- Clear, small bug with reproduction: start at Specification if expected behavior is not explicitly approved; start at Planning when approved requirements are available. Implementation requires a human-approved plan.
 - Another developer's PR: invoke Code Review independently.
 - Technical investigation: invoke a standalone investigation activity and proceed to Planning only if implementation is needed.
 - Small maintenance task: use only the relevant standalone skills.
@@ -437,7 +442,7 @@ At the start, determine available artifacts, project context, and current stage.
 
 M1 requires explicit human approval at consequential decision points:
 - Confirm intent when the optional Intent stage is used.
-- Review and approve the product breakdown and select the next increment when Product Decomposition is used.
+- Review and approve the product breakdown and select the next increment when Product Breakdown is used.
 - Approve requirements/specification before planning proceeds.
 - Approve the implementation plan before implementation begins.
 - Resolve business decisions or changes to scope, expected behavior, or acceptance criteria.
@@ -482,7 +487,7 @@ Initial default maximum: three rounds per review activity. This is a safety cap,
 - Plan Review approval threshold: no blocking or major findings.
 - Code Review approval threshold: no blocking findings.
 - Minor findings and suggestions remain visible for human judgment.
-- If the maximum is reached with unresolved blocking or major findings, stop and escalate to a human.
+- If the maximum is reached with findings above the applicable review threshold, stop and escalate to a human. For Plan Review that includes Blocking or Major findings; for Code Review it means unresolved Blocking findings. Major Code Review findings remain visible for owner consideration but do not automatically block.
 - Do not mark a review approved while its applicable blocking threshold is unmet.
 
 Human approval remains separate from an agent's review outcome.
@@ -532,11 +537,11 @@ The latest approved specification and the plan with documented, authorized adapt
 
 ### 10.1 Adapter principles
 
-Codex is the first supported coding-agent adapter. Its exact skill-discovery and instruction requirements must be verified against the current Codex environment and documentation before the adapter is considered validated.
+Codex is the first coding-agent adapter. Increment 3 documented and validated selected conventions in Codex CLI 0.167.0 on Linux/WSL2 x86_64. Increment 5 separately validated an end-to-end workflow with Codex CLI 0.167.2 on Linux WSL2 x86_64. See `adapters/codex/README.md` for evidence and limits. These results do not establish compatibility with other Codex versions, clients, hosts, or configurations.
 
 Use Codex's native skill, repository-instruction, and review mechanisms where suitable. In particular, prefer Codex's native code-review capability (such as `/review`) for review execution when it is available and compatible with the framework's review requirements. Keep Codex-specific commands, syntax, and conventions in adapters/codex/ and avoid leaking them into the framework core.
 
-The framework's Code Review skill remains responsible for the review process, inputs, criteria, finding format and lifecycle, review rounds, and outcome rules. The adapter selects the strongest suitable execution mechanism supported by the coding agent.
+The framework's Code Review skill remains responsible for the review process, inputs, criteria, finding format and lifecycle, review rounds, and outcome rules. Current Codex documentation describes `/review` as a dedicated local-diff reviewer that reports prioritized findings without changing the working tree. The adapter can use it as a finding-generation mechanism, but must not assume it loads the framework skill, receives all approved baselines, emits the framework report schema, or preserves finding history and thresholds. See `adapters/codex/README.md` for the supported use and fallback. Verify behavior against the selected Codex client/version.
 
 ### 10.2 Installed skill layout
 
@@ -546,7 +551,7 @@ The intended Codex installation location is:
     └── skills/
         ├── intent/
         │   └── SKILL.md
-        ├── product-decomposition/
+        ├── product-breakdown/
         │   └── SKILL.md
         ├── specification/
         │   └── SKILL.md
@@ -559,7 +564,7 @@ The intended Codex installation location is:
         └── code-review/
             └── SKILL.md
 
-The canonical source skill definitions live under skills/ in the framework repository. The adapter may copy or transform them as required by verified Codex conventions. Do not assume compatibility details without testing.
+The canonical source skill definitions live under `skills/` in the framework repository. The compatibility checks for Codex CLI 0.167.0 on Linux/WSL2 x86_64 confirmed that they can be copied verbatim to the corresponding `.agents/skills/<skill-name>/SKILL.md` paths and explicitly invoked by their frontmatter names. See `adapters/codex/README.md`; do not generalize this result to untested Codex versions or environments.
 
 ### 10.3 Installed shared resources
 
@@ -581,7 +586,7 @@ The intended shared resource layout is:
 
 ### 10.4 AGENTS.md integration
 
-The adapter provides adapters/codex/AGENTS.md.template. The installer adds its content as a clearly marked, framework-managed section in the target project's AGENTS.md.
+The adapter provides `adapters/codex/AGENTS.md.template` as a concise instruction template. The Codex installer encloses it in explicit managed-section markers. It appends that section to an existing marker-free `AGENTS.md`, preserving existing content. It updates a marked section only when its hash matches the installation manifest; a modified section is preserved and the incoming version is written to `.agentic-sdlc/conflicts/` for manual resolution. Malformed or duplicate markers are reported without modifying the file.
 
 The section should:
 - Identify the framework and installed resource locations.
@@ -590,13 +595,13 @@ The section should:
 - Reinforce approval gates and boundaries.
 - Explain the default artifact location and that existing project conventions take precedence.
 
-Use explicit markers:
+The installer uses these explicit markers:
 
     <!-- BEGIN AGENTIC-SDLC MANAGED SECTION -->
     ...
     <!-- END AGENTIC-SDLC MANAGED SECTION -->
 
-Never replace the entire project AGENTS.md. Preserve all content outside the managed section. If the managed section has been locally modified, detect and report the conflict rather than silently overwriting it.
+Never overwrite existing project instructions silently.
 
 AGENTS.md is a project instruction source, not unquestionable truth. Apply the conflict-handling policy in Section 4.9.
 
@@ -612,14 +617,15 @@ The intended source repository structure is:
     ├── VERSION
     ├── LICENSE
     ├── PROVENANCE.md
-    ├── principles/
-    │   └── engineering-principles.md
+    ├── .agentic-sdlc/
+    │   └── principles/
+    │       └── engineering-principles.md
     ├── workflows/
     │   └── idea-to-pr.md
     ├── skills/
     │   ├── intent/
     │   │   └── SKILL.md
-    │   ├── product-decomposition/
+    │   ├── product-breakdown/
     │   │   └── SKILL.md
     │   ├── specification/
     │   │   └── SKILL.md
@@ -640,13 +646,11 @@ The intended source repository structure is:
     ├── adapters/
     │   └── codex/
     │       ├── README.md
-    │       └── AGENTS.md.template
-    ├── scripts/
-    │   └── install.py
+    │       ├── AGENTS.md.template
+    │       ├── install.py
+    │       └── tests/
+    │           └── test_install.py
     └── tests/
-        ├── installer/
-        │   ├── fixtures/
-        │   └── test_*.py
         ├── regression/
         │   ├── README.md
         │   └── *.md
@@ -702,7 +706,7 @@ Example workspace:
 Example command:
 
     cd agentic-sdlc-framework
-    python scripts/install.py --target ../sample-app --adapter codex
+    python3 adapters/codex/install.py --target ../sample-app --adapter codex
 
 Installation is copy-based. The application receives a self-contained copy of required runtime resources and does not depend on the framework clone after installation.
 
@@ -714,11 +718,11 @@ The installer:
 - Validates the target and selected adapter.
 - Copies the seven skills into .agents/skills/.
 - Copies principles, workflow, and templates (including product-breakdown.md) into .agentic-sdlc/.
-- Writes installed version information.
-- Generates and maintains a manifest of framework-managed files and integrity information.
+- Writes installed version information and a manifest with SHA-256 hashes for managed files.
 - Safely adds or updates the managed section in AGENTS.md.
-- Creates the default artifact directory only when needed and when the project has no established equivalent.
 - Reports actions, conflicts, and errors clearly.
+
+The installer does not scaffold artifact directories; users and skills follow the target project's existing documentation conventions.
 
 The installer must use Python's standard library only for M1. It should be dependency-free and designed for supported development environments.
 
@@ -754,15 +758,15 @@ If the managed AGENTS.md section has been locally modified, preserve it and repo
 
 Update the framework clone to the intended version, then run the installer in update mode:
 
-    python scripts/install.py --target ../sample-app --adapter codex --update
+    python3 adapters/codex/install.py --target ../sample-app --adapter codex --update
 
 The installer uses the checked-out framework version. It must not silently fetch or install the latest version. Updates are intentional and controlled.
 
 ### 12.6 Manifest and integrity
 
-The manifest records the installed framework version and the framework-managed file inventory with sufficient integrity metadata to distinguish unmodified files from local modifications.
+The version 1 manifest records the source version, each installed framework file's SHA-256, the hash of the managed `AGENTS.md` section, and hashes of manually accepted local resolutions. The installer validates version types, recognized managed paths, and every hash before trusting the manifest. It does not claim ownership of project files outside managed resources and the marked instruction section. The explicit `--accept-resolved PROJECT_PATH` option records a user's reviewed merge as a local baseline without replacing it with upstream content; later upstream changes still produce conflicts for review.
 
-Exact manifest schema and checksum mechanics are implementation details to finalize during installer design. They must support safe update/conflict behavior and must not claim ownership of project files outside the managed integration section.
+The manifest format may evolve as implementation evidence requires, while preserving safe update/conflict behavior and avoiding ownership claims over project files outside the managed integration section.
 
 ## 13. Versioning and releases
 
@@ -785,7 +789,7 @@ The framework's development tests stay in the framework repository. They are not
 
 ### 14.1 Installer tests
 
-Automated tests for scripts/install.py should use Python's standard unittest library and test at least:
+Automated tests for adapters/codex/install.py use Python's standard unittest library and test at least:
 - Fresh installation.
 - Installation into a project with an existing AGENTS.md.
 - Installation when AGENTS.md does not exist.
@@ -815,8 +819,8 @@ Scenarios should include:
 - Existing artifacts that make one or more workflow stages unnecessary.
 - Standalone skill invocation with incomplete optional context.
 - Vague initiative clarified into intent, then progressively decomposed into candidate capabilities and a selected first increment.
-- Product Decomposition invoked from an existing brief or backlog without requiring a new intent artifact.
-- Small, already-scoped work item bypasses Product Decomposition.
+- Product Breakdown invoked from an existing brief or backlog without requiring a new intent artifact.
+- Small, already-scoped work item bypasses Product Breakdown.
 - Owner rejects or reprioritizes proposed work, and the agent preserves the decision without silently generating an approved backlog.
 
 Each scenario defines minimum input/context, expected behavior, failure signals, and relevant workflow or skill.
@@ -825,7 +829,7 @@ When an agent failure occurs, capture a minimal reproducible scenario, diagnose 
 
 ### 14.3 Codex integration validation
 
-Validate the installed framework in a real sample application using Codex.
+Validate framework behavior in a sample application using Codex after installation support exists. Increment 5 completed an end-to-end validation in a disposable Python standard-library CLI application using SQLite. The evidence and remaining limits are recorded in `adapters/codex/README.md`. This result does not establish broad compatibility or release readiness.
 
 At minimum:
 1. Install the framework into a sample application.
@@ -859,40 +863,40 @@ Framework development tests are not limited to installation or update events. Th
 
 ## 15. M1 completion criteria
 
-M1 is complete only when all of the following are satisfied:
+These criteria record implementation and validation evidence. The M1 implementation and Increment 5 end-to-end workflow validation are complete; broader manual regression coverage remains a documented limitation and is not represented as exercised.
 
 ### Framework core
-- [ ] Shared engineering principles are documented and referenced consistently.
-- [ ] All seven standalone skills have defined inputs, outputs, boundaries, and behavior.
-- [ ] Five canonical templates exist: intent, product-breakdown, spec, plan, and review.
-- [ ] Product Decomposition supports progressive decomposition of broad initiatives and can be skipped for already-scoped work.
-- [ ] Idea-to-PR workflow supports idea-driven and task-driven entry points.
-- [ ] Workflow can skip stages when equivalent approved information exists.
-- [ ] Human approval gates and stop/escalation rules are explicit.
-- [ ] Plan Review and Code Review use bounded loops and stable finding IDs.
-- [ ] Adaptive Planning rules are explicit and traceable.
+- [x] Shared engineering principles are documented and referenced consistently.
+- [x] All seven standalone skills have defined inputs, outputs, boundaries, and behavior.
+- [x] Five canonical templates exist: intent, product-breakdown, spec, plan, and review.
+- [x] Product Breakdown supports progressive decomposition of broad initiatives and can be skipped for already-scoped work.
+- [x] Idea-to-PR workflow supports idea-driven and task-driven entry points.
+- [x] Workflow can skip stages when equivalent approved information exists.
+- [x] Human approval gates and stop/escalation rules are explicit.
+- [x] Plan Review and Code Review use bounded loops and stable finding IDs.
+- [x] Adaptive Planning rules are explicit and traceable.
 
 ### Codex adapter and installation
-- [ ] Current Codex skill-discovery and instruction conventions have been verified.
-- [ ] Codex adapter instructions and AGENTS.md template exist.
-- [ ] Installer supports fresh installation and safe updates.
-- [ ] Installer preserves project-owned instructions and local modifications.
-- [ ] Manifest and version tracking support conflict detection.
-- [ ] Installer is idempotent and uses only the Python standard library.
+- [x] Current Codex skill-discovery and instruction conventions have been verified for the documented Codex CLI 0.167.0 Linux/WSL2 environment.
+- [x] Codex adapter instructions and AGENTS.md template exist.
+- [x] Installer supports fresh installation and safe updates.
+- [x] Installer preserves project-owned instructions and local modifications.
+- [x] Manifest and version tracking support conflict detection.
+- [x] Installer is idempotent and uses only the Python standard library.
 
 ### Validation
-- [ ] Automated installer tests pass.
-- [ ] Relevant regression scenarios have been exercised.
-- [ ] End-to-end Codex validation has been completed in a sample application.
-- [ ] Validation results and limitations are documented.
-- [ ] No unresolved critical issue prevents the intended M1 workflow from operating safely.
+- [x] Automated installer tests pass. (Increment 5: sixteen cases passed.)
+- [ ] Relevant manual regression scenarios beyond those exercised during Increment 5 have been exercised; the repository's regression catalog remains manual.
+- [x] End-to-end Codex validation has been completed in a disposable sample application (Increment 5; see adapter validation record).
+- [x] Validation results and limitations are documented.
+- [x] No unresolved critical issue preventing the intended M1 workflow from operating safely was identified in the recorded Increment 5 validation. Minor finding CR-1 remains open for owner consideration.
 
 Do not mark a criterion complete based only on planned behavior. Record evidence from actual implementation and validation.
 
 ## 16. Deferred decisions and future work
 
 The following remain outside M1 or require later evidence:
-- A dedicated product-discovery and business-validation capability beyond the initial guided discovery supported by the Intent skill. Product Decomposition may identify evidence gaps but does not perform market validation.
+- A dedicated product-discovery and business-validation capability beyond the initial guided discovery supported by the Intent skill. Product Breakdown may identify evidence gaps but does not perform market validation.
 - Advanced product portfolio management, roadmap governance, quantitative prioritization frameworks, and automated backlog synchronization with external project-management tools.
 - Claude Code adapter and CLAUDE.md integration.
 - Additional coding-agent adapters.
@@ -916,3 +920,5 @@ Implementation details that depend on current Codex behavior must be verified du
 | 2026-11-03 | Added Product Decomposition to M1 as an optional, standalone, progressive initiative-level capability; defined product-breakdown artifact, workflow handoff, approval, installation, and validation implications. |
 | 2026-11-04 | Added project-wide originality, provenance, and quality principles; introduced a concise provenance record for material external influences and third-party material. |
 | 2026-11-06 | Clarified the M1 workflow's conditional Product Decomposition, separate bounded review activities, approval gates, and flexible entry points; corrected the Codex skill-discovery checklist. |
+| 2026-11-12 | Added the Codex installer, manifest-backed update conflict detection, managed `AGENTS.md` sections, and disposable automated installer tests. |
+| 2026-11-15 | Updated M1 implementation and validation status with Increment 5 evidence; retained untested regression coverage as incomplete and documented the unreleased version. |

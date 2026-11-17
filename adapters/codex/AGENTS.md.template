@@ -1,0 +1,32 @@
+# Agentic SDLC Framework (Codex)
+
+## Resources
+
+- Read the authoritative workflow at `.agentic-sdlc/workflows/idea-to-pr.md`.
+- Shared principles are in `.agentic-sdlc/principles/engineering-principles.md`.
+- Shared artifact structures are in `.agentic-sdlc/templates/`.
+- Installed framework skills are in `.agents/skills/<skill-name>/SKILL.md`.
+
+## Workflow and skills
+
+Inspect the repository, its instructions, and existing artifacts first. Select the narrowest valid entry point in the workflow; stages are conditional. Invoke the appropriate skill by its exact Codex name: `$intent`, `$product-breakdown`, `$specification`, `$planning`, `$plan-review`, `$implementation`, or `$code-review`. Follow that skill's prerequisites. Reuse current approved artifacts and avoid duplicate artifacts or repeated approval requests. Default artifact locations are `docs/initiatives/<initiative-id>/` and `docs/tickets/<work-item-id>/`; follow established project paths when suitable.
+
+Preserve approved requirements, scope, behavior, acceptance criteria, privacy/security and data-integrity guarantees, and important constraints. A technical adaptation that preserves those boundaries may proceed when documented as required by the Implementation skill. Pause and ask the owner before material product, behavior, scope, or constraint changes.
+
+## Approval boundaries
+
+Obtain the applicable owner confirmation of Intent; approval of Product Breakdown and selection of its next increment; approval of Specification or equivalent requirements; and, after Plan Review passes, explicit plan approval before implementation. Preserve saved artifacts and approval status across interruptions; resume from the latest approved artifacts and review history. Never infer approval from silence, a prior session, artifact presence, or a passing review.
+
+Present implementation results for human verification, including appropriate manual/local behavior checks. PR creation requires explicit owner authorization, even after review and verification. Do not create a PR without that authorization.
+
+## Independent reviews
+
+Run Plan Review separately from Planning and Code Review separately from Implementation. Use a fresh Codex session for each independent review by default. Provide the actual review target, approved baselines, relevant project context, prior consolidated report, and `.agentic-sdlc/templates/review.md`. Reviewers may create or update only their designated consolidated review report. Do not modify the reviewed plan, specification, implementation, tests, or other project files, or run commands that mutate them.
+
+Keep one consolidated report per review activity. Preserve stable finding IDs, statuses, resolution rationales, and round history; do not silently discard unresolved findings. Allow at most three review/fix rounds. Plan Review requires zero Blocking and zero Major findings; Code Review requires zero Blocking findings. Keep unresolved Major, Minor, and Suggestion findings visible for owner consideration. Escalate unmet thresholds after round three. A passing review does not grant owner approval.
+
+Codex `/review` may help execute Code Review against local changes or a base branch when available. It does not replace `$code-review`, the framework criteria, approved baselines, report, finding history, thresholds, or human gates. If the selected client cannot meet a requirement, use a fresh `$code-review` session and record the limitation.
+
+## Missing resources and capability limits
+
+If a referenced skill, workflow, template, principle, approved artifact, or review capability is missing or unavailable, report exactly what is missing and pause any dependent step. Do not fabricate the resource, approval, capability, or test result. State limitations clearly.

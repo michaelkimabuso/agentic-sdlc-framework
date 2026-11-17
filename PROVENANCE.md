@@ -13,6 +13,7 @@ This file records specific external works that materially informed the framework
 | Source | Area informed | Relationship to this project |
 |---|---|---|
 | Anthropic, [The AI-native SDLC playbook](https://claude.com/resources/articles/the-ai-native-sdlc-playbook) | Intent capture: clarifying an idea with its owner, exploring problem/users/constraints/outcomes, and recording the result in an intent artifact. | Consulted as a reference for the general workflow concept. The framework defines its own wording, skill boundaries, artifact structure, approval model, and broader workflow. No passages are intentionally reproduced. |
+| OpenAI, [Codex skills](https://developers.openai.com/codex/skills), [Code review](https://developers.openai.com/codex/code-review), and [Developer commands](https://developers.openai.com/codex/cli/slash-commands) documentation | Codex project skill discovery and invocation, and the behavior and limits of native code review. | Consulted to verify adapter conventions and avoid unsupported claims. No documentation text is intentionally reproduced; the framework retains its own workflow, review criteria, approval model, and artifacts. |
 
 ## Maintenance
 
@@ -23,4 +24,4 @@ This file records specific external works that materially informed the framework
 - Revisit entries before public releases or material changes to third-party content.
 - If provenance or licensing is uncertain, flag it for review rather than assuming permission.
 
-Last reviewed: 2026-11-04.
+Last reviewed: 2026-11-12.
